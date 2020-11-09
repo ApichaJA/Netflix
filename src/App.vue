@@ -1,18 +1,26 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+       <NavBar />
     <router-view/>
   </div>
 </template>
 
+<script>
+import NavBar from "./components/NavBar";
+export default {
+components: {
+    NavBar,
+}
+}
+</script>
+
 <style>
+body{
+  background: #141414;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+font-family: "Netflix";
+src: url('fonts/Netflix.ttf');
   text-align: center;
   color: #2c3e50;
 }
