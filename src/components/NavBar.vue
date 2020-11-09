@@ -1,8 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-sm navbar-dark pl-5 pr-5">
-    <router-link class="navbar-brand" :to="{ name: 'Home' }">
       <img src="" width="250px" />
-    </router-link>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <router-link
@@ -10,7 +8,7 @@
           :to="{ name: 'Home' }"
           :class="{ 'nav-link-active': this.$route.name === 'Home' }"
         >
-        Home
+        HOME
         </router-link>
       </li>
     </ul>
@@ -26,10 +24,6 @@ export default {
 </script>
 
 <style scoped>
-.navbar-white {
-  background-color: #fff;
-  padding: 3vh 0 3vh 0;
-}
 .navbar {
   display: flex;
   justify-content: center;

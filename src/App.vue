@@ -18,9 +18,10 @@ components: {
 body{
   background: #141414;
 }
+
 #app {
-font-family: "Netflix";
-src: url('fonts/Netflix.ttf');
+  font-family: "Roboto-Black";
+  src: url('assets/fonts/Roboto-Black.ttf') format('truetype');
   text-align: center;
   color: #2c3e50;
 }
