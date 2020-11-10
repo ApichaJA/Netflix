@@ -3,13 +3,14 @@
 
   <div class="videoWrapper">
     <div class="feach-video">
-    <video class="top-main-motion" autoplay v-bind:muted="videoMuted === 'muted'">
+    <video ref="videoRef" class="top-main-motion" autoplay v-bind:muted="videoEvent === 'muted'" @ended="videoEnd('ended')">
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-right-info">
       <button class="volume-up btn">
-        <i class="fas fa-volume-up vector-volume" v-if="videoMuted === 'unmuted'" v-on:click="volumeSelect('muted')"></i>
-        <i class="fas fa-volume-mute vector-volume" v-if="videoMuted === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
+        <i class="fas fa-volume-up vector-volume" v-if="videoEvent === 'unmuted'" v-on:click="volumeSelect('muted')"></i>
+        <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
+        <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo('unmuted')"></i>
         </button>
       <div class="rating-main-box"><span>16+</span></div>
     </div>
@@ -22,12 +23,19 @@
 export default {
   data() {
     return {
-      videoMuted: "unmuted",
+      videoEvent: "unmuted",
     };
   },
   methods: {
-      volumeSelect: function(volume){
-      this.videoMuted = volume;
+      volumeSelect: function(event){
+      this.videoEvent = event;
+    },
+    videoEnd: function (event) {
+      this.videoEvent = event;
+    },
+    replayVideo: function(event){
+      this.videoEvent = event;
+      this.$refs.videoRef.play();
     }
   },
   computed: {
@@ -55,11 +63,11 @@ export default {
   display: flex;
   position: absolute;
   right: 0;
-  bottom: 33vh;
+  bottom: 17vw;
 }
 
 .vector-volume{
-  font-size:22px;
+  font-size:1.1vw;
   color:#fff
 }
 
@@ -68,8 +76,8 @@ export default {
   align-content: center;
   border: 1px solid #fff;
   border-radius: 50%;
-  padding: .8em;
-  margin-right: 2em;
+  padding: .8vw;
+  margin-right: 1vw;
 }
 
 .rating-main-box{
