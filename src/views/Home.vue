@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       topvideo:
-        "https://www.youtube.com/embed/8_rEZV3n3mk?controls=0&autoplay=1",
+        "https://www.youtube.com/embed/8_rEZV3n3mk?controls=0&autoplay=1&loop=1",
     };
   },
 };
