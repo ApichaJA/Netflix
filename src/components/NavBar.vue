@@ -8,7 +8,7 @@
           :to="{ name: 'Home' }"
           :class="{ 'nav-link-active': this.$route.name === 'Home' }"
         >
-          Home
+          Homedsa
         </router-link>
       </li>
       <li class="nav-item">
