@@ -10,7 +10,7 @@
       <button class="volume-up btn">
         <i class="fas fa-volume-up vector-volume" v-if="videoEvent === 'unmuted'" v-on:click="volumeSelect('muted')"></i>
         <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
-        <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo('unmuted')"></i>
+        <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo()"></i>
         </button>
       <div class="rating-main-box"><span>13+</span></div>
     </div>
@@ -33,8 +33,7 @@ export default {
     videoEnd: function (event) {
       this.videoEvent = event;
     },
-    replayVideo: function(event){
-      this.videoEvent = event;
+    replayVideo: function(){
       this.$refs.videoRef.play();
     }
   },
