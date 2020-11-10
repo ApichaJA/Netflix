@@ -24,6 +24,12 @@ export default {
 </script>
 
 <style scoped>
+
+nav{
+  position: fixed;
+  background-color: transparent;
+}
+
 .navbar {
   display: flex;
   justify-content: center;
