@@ -1,4 +1,6 @@
 <template>
+<div class="main-browse">
+
   <div class="videoWrapper">
     <iframe
       class="top-main-motion"
@@ -8,6 +10,7 @@
       >"></iframe
     >
   </div>
+</div>
 </template>
 
 <script>
@@ -22,6 +25,12 @@ export default {
 </script>
 
 <style scoped>
+
+.main-browse{
+  z-index: 1;
+  position: absolute;
+  top: -7vh;
+}
 
 .top-main-motion {
  width: 100vw;
