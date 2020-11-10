@@ -12,7 +12,7 @@
         <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
         <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo('unmuted')"></i>
         </button>
-      <div class="rating-main-box"><span>168888+</span></div>
+      <div class="rating-main-box"><span>13+</span></div>
     </div>
     </div>
   </div>
