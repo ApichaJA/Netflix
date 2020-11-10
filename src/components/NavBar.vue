@@ -1,6 +1,6 @@
 <template>
-  <nav class="navbar navbar-expand-sm navbar-dark pl-5 pr-5">
-    <img src="@/assets/netflix-logo.png" width="100px" />
+  <nav class="navbar navbar-expand-sm">
+    <img src="@/assets/netflix-logo.png" width="98px" />
     <ul class="navbar-nav ml-4">
       <li class="nav-item">
         <router-link
@@ -61,19 +61,19 @@ export default {
 
 <style scoped>
 nav {
+  padding: 1.1vh 3vw;
   z-index: 2;
-  position: absolute;
-  padding: 0.5em;
+  position: fixed;
   background-color: transparent;
 }
 
 .nav-item{
-  margin: .2vw;
+  margin: .25vw;
 }
 
 .nav-link {
   color: #e5e5e5 !important;
-  font-size: 14px;
+  font-size: 16px;
 }
 .nav-link:hover {
   opacity: 0.5;
