@@ -16,12 +16,11 @@ components: {
 
 <style>
 body{
-  background: #141414;
+  background-color: #141414;
 }
 
 #app {
-  font-family: "Roboto-Black";
-  src: url('assets/fonts/Roboto-Black.ttf') format('truetype');
+  font-family: 'Martel Sans', sans-serif;
   text-align: center;
   color: #2c3e50;
 }

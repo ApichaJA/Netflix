@@ -8,7 +8,7 @@
           :to="{ name: 'Home' }"
           :class="{ 'nav-link-active': this.$route.name === 'Home' }"
         >
-        HOME
+        New Releases
         </router-link>
       </li>
     </ul>
@@ -35,14 +35,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.btn-nav {
-  background: #000000;
-  border-radius: 5px;
-  color: #fff;
-  width: 169px;
-  height: 40px;
-  font-size: 16px;
-}
 
 .btn-nav:hover {
   background-color: #ec1c24;
@@ -56,7 +48,7 @@ export default {
 }
 .nav-link {
   color: #000 !important;
-  font-size: 16px;
+  font-size: 48px;
 }
 .nav-link:hover {
   color: #ec1c24 !important;
