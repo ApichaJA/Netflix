@@ -3,10 +3,14 @@
 
   <div class="videoWrapper">
     <div class="feach-video">
-    <video class="top-main-motion" autoplay loop>
+    <video class="top-main-motion" autoplay v-bind:muted="videoMuted === 'muted'">
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-right-info">
+      <button class="volume-up btn">
+        <i class="fas fa-volume-up vector-volume" v-if="videoMuted === 'unmuted'" v-on:click="volumeSelect('muted')"></i>
+        <i class="fas fa-volume-mute vector-volume" v-if="videoMuted === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
+        </button>
       <div class="rating-main-box"><span>16+</span></div>
     </div>
     </div>
@@ -18,13 +22,20 @@
 export default {
   data() {
     return {
+      videoMuted: "unmuted",
     };
+  },
+  methods: {
+      volumeSelect: function(volume){
+      this.videoMuted = volume;
+    }
   },
   computed: {
   topvideo () {
     var movieName = "wywslp"
     return require('@/assets/videos/' + movieName + '.mp4')
-  }
+  },
+
 }
 }
 </script>
@@ -41,9 +52,24 @@ export default {
   position: relative;
 }
 .site-right-info{
+  display: flex;
   position: absolute;
   right: 0;
   bottom: 33vh;
+}
+
+.vector-volume{
+  font-size:22px;
+  color:#fff
+}
+
+.volume-up{
+  display: flex;
+  align-content: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  padding: .8em;
+  margin-right: 2em;
 }
 
 .rating-main-box{
