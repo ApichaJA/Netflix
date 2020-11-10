@@ -2,13 +2,9 @@
 <div class="main-browse">
 
   <div class="videoWrapper">
-    <iframe
-      class="top-main-motion"
-      :src="topvideo"
-      frameborder="0"
-      allow="autoplay"
-      >"></iframe
-    >
+    <video class="top-main-motion" autoplay loop>
+      <source :src="topvideo" type="video/mp4">
+    </video>
   </div>
 </div>
 </template>
@@ -17,11 +13,14 @@
 export default {
   data() {
     return {
-      topvideo:
-        "https://www.youtube.com/embed/8_rEZV3n3mk?controls=0&autoplay=1&loop=1&showinfo=0&rel=0&modestbranding=1",
     };
   },
-};
+  computed: {
+  topvideo () {
+    return require('@/assets/videos/wywslp.mp4')
+  }
+}
+}
 </script>
 
 <style scoped>
@@ -29,7 +28,7 @@ export default {
 .main-browse{
   z-index: 1;
   position: absolute;
-  top: -7vh;
+  top: -7%;
 }
 
 .top-main-motion {
