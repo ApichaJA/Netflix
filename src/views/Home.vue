@@ -7,7 +7,7 @@
           <span class="content-list">My List</span>
           <div class="explore-all">
             <span class="more-link">Explore All</span>
-            <span class="more-link-run">></span>
+            <span class="more-link-run"><i class="fas fa-chevron-right"></i></span>
           </div>
         </div>
       <div class="my-list-cal">
@@ -24,7 +24,7 @@
           <span class="content-list">Romantic Korean TV Shows</span>
           <div class="explore-all">
             <span class="more-link">Explore All</span>
-            <span class="more-link-run">></span>
+            <span class="more-link-run"><i class="fas fa-chevron-right"></i></span>
           </div>
         </div>
      <div class="my-list-cal">
