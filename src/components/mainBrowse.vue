@@ -8,6 +8,12 @@
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-left-info">
+        <div class="logo-ep">
+            <img :src="topvideoImg">
+        </div>
+    <div class="episode-title">
+        <span>{{topvideoTitle}}</span>
+    </div>
         <div class="play-info">
         <button class="btn btn-site-left">
             <i class="fas fa-play"></i>
@@ -15,7 +21,7 @@
         </button>
         </div>
         <div class="more-info ml-3">
-<button class="btn btn-site-left-info">
+            <button class="btn btn-site-left-info">
             <i class="fas fa-info-circle"></i>
             <span class="site-text-info">More Info</span>
         </button>
@@ -101,6 +107,14 @@ watch:{
     
   },
   computed: {
+    topvideoImg(){
+        var topimg = "logowywslp"
+        return require('@/assets/videos/' + topimg + '.png')
+    },
+    topvideoTitle(){
+        var tileEp = "A young woman has visions through her dreams of terrible things that will happen to people in the future."
+        return tileEp
+    },
     topvideo () {
       var movieName = "wywslp"
     return require('@/assets/videos/' + movieName + '.mp4')
@@ -176,6 +190,24 @@ watch:{
 .site-text-info{
     margin-left: .9vw;
     font-size: 1.2vw;
+}
+
+.episode-title{
+    position: absolute;
+    bottom: 5vw;
+    width: 40vw;
+    font-size: 1.4vw;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.45);
+    text-align: left;
+    color: #fff;
+}
+
+.logo-ep{
+    position: absolute;
+    bottom: 10vw;
+}
+.logo-ep img{
+    width: 40vw;
 }
 
 .site-right-info{
