@@ -14,6 +14,12 @@
             <span class="site-left-play">Play</span>
         </button>
         </div>
+        <div class="more-info ml-3">
+<button class="btn btn-site-left-info">
+            <i class="fas fa-info-circle"></i>
+            <span class="site-text-info">More Info</span>
+        </button>
+        </div>
     </div>
 
     <div class="site-right-info">
@@ -153,6 +159,21 @@ watch:{
 }
 
 .site-left-play{
+    margin-left: .9vw;
+    font-size: 1.2vw;
+}
+
+.btn-site-left-info{
+    background-color: rgba(109,109,110,0.7);
+    padding: .7vw 1.85vw .5vw 1.85vw;
+    color: #fff;
+}
+
+.btn-site-left-info i{
+    font-size: 1.4vw;
+}
+
+.site-text-info{
     margin-left: .9vw;
     font-size: 1.2vw;
 }
