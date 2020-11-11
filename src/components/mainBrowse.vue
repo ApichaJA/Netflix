@@ -27,20 +27,22 @@ export default {
     return {
         mainVideoOnload: true,
         videoEvent: true,
+        muteStatus: true,
     };
   },
   methods: {
     volumeSelect: function(event){
       this.videoEvent = event;
+      this.muteStatus = event;
       this.$refs.videoRef.muted = 'true';
     },
     videoEnd: function (event) {
       this.videoEvent = event;
       this.$refs.videoRef.muted = 'false';
     },
-    replayVideo: function(event){
-      this.videoEvent = event;
-      this.$refs.videoRef.play();
+    replayVideo: function(){
+        this.videoEvent = this.muteStatus;
+        this.$refs.videoRef.play();
     },
   },
   computed: {
