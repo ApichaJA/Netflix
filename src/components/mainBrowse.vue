@@ -3,12 +3,12 @@
 
   <div class="videoWrapper">
     <div class="feach-video" v-on:change="volumeSelect('unmuted')">
-       <img class="poster" :class="{'outposter': mainVideoOnload === false}" src="@/assets/videos/wywlepposter.jpg">
+       <img class="poster" :class="{'outposter': showPoster === false}" src="@/assets/videos/wywlepposter.jpg">
     <video ref="videoRef" :muted='videoEvent' autoplay class="top-main-motion" @ended="videoEnd('ended')">
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-right-info">
-      <button class="volume-up btn">
+      <button class="volume-up btn"  v-if="firstLoadPoster">
         <i class="fas fa-volume-up vector-volume" v-if="videoEvent === false" v-on:click="volumeSelect(true)"></i>
         <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === true" v-on:click="volumeSelect(false)"></i>
         <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo(false)"></i>
@@ -25,11 +25,23 @@
 export default {
   data() {
     return {
-        mainVideoOnload: true,
+        firstLoadPoster: false,
+        showPoster: true,
         videoEvent: true,
         muteStatus: true,
+        tabFocus:false,
     };
   },
+  created() {
+  this.detectFocusOut();
+},
+
+watch:{
+    tabFocus(value) {
+      console.log("New value:", value);
+    },
+},
+
   methods: {
     volumeSelect: function(event){
       this.videoEvent = event;
@@ -44,6 +56,29 @@ export default {
         this.videoEvent = this.muteStatus;
         this.$refs.videoRef.play();
     },
+     detectFocusOut() {
+        let inView = false;
+
+        const onWindowFocusChange = (e) => {
+            if ({ focus: 1, pageshow: 1 }[e.type]) {
+                if (inView) return;
+                this.tabFocus = true;
+                inView = true;
+                this.showPoster = false;
+                this.$refs.videoRef.play();
+            } else if (inView) {
+                this.tabFocus = !this.tabFocus;
+                inView = false;
+                this.$refs.videoRef.pause();
+                this.showPoster = true;
+            }
+        };
+
+        window.addEventListener('focus', onWindowFocusChange);
+        window.addEventListener('blur', onWindowFocusChange);
+        window.addEventListener('pageshow', onWindowFocusChange);
+        window.addEventListener('pagehide', onWindowFocusChange);
+    }
   },
   computed: {
     topvideo () {
@@ -53,7 +88,8 @@ export default {
     },
   mounted(){
     setTimeout(() => {
-      this.mainVideoOnload = false
+        this.firstLoadPoster = true
+      this.showPoster = false
       this.$refs.videoRef.play();
       },2000)
     },
@@ -65,12 +101,13 @@ export default {
 .main-browse{
   z-index: 1;
   position: absolute;
-  top: -6%;
+  top: -7%;
 }
 
 .poster{
     opacity: 1;
     width:100%;
+    transition: opacity .3s;
     position: absolute; 
 }
 
@@ -82,6 +119,7 @@ export default {
 .feach-video{
   position: relative;
 }
+
 .site-right-info{
   display: flex;
   position: absolute;
