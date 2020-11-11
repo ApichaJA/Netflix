@@ -29,7 +29,7 @@ export default {
         showPoster: true,
         videoEvent: true,
         muteStatus: true,
-        tabFocus:false,
+        tabFocus:true,
     };
   },
   created() {
@@ -50,20 +50,22 @@ watch:{
     },
     videoEnd: function (event) {
       this.videoEvent = event;
+      this.showPoster = true;
       this.$refs.videoRef.muted = 'false';
     },
     replayVideo: function(){
         this.videoEvent = this.muteStatus;
+        this.showPoster = false;
         this.$refs.videoRef.play();
     },
      detectFocusOut() {
         let inView = false;
-
         const onWindowFocusChange = (e) => {
             if ({ focus: 1, pageshow: 1 }[e.type]) {
                 if (inView) return;
                 this.tabFocus = true;
                 inView = true;
+                if(this.firstLoadPoster === true && this.videoEvent !== 'ended')
                 setTimeout(() => {
                     this.showPoster = false;
                     this.$refs.videoRef.play();
@@ -76,12 +78,12 @@ watch:{
                 this.showPoster = true;
             }
         };
-
         window.addEventListener('focus', onWindowFocusChange);
         window.addEventListener('blur', onWindowFocusChange);
         window.addEventListener('pageshow', onWindowFocusChange);
         window.addEventListener('pagehide', onWindowFocusChange);
     }
+    
   },
   computed: {
     topvideo () {
@@ -127,7 +129,7 @@ watch:{
   display: flex;
   position: absolute;
   right: 0;
-  bottom: 17vw;
+  bottom: 16.3vw;
 }
 
 .vector-volume{
