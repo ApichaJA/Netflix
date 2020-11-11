@@ -7,8 +7,12 @@
     <video ref="videoRef" :muted='videoEvent' autoplay class="top-main-motion" @ended="videoEnd('ended')">
       <source :src="topvideo" type="video/mp4">
     </video>
+    <div class="site-left-info">
+
+    </div>
+
     <div class="site-right-info">
-      <button class="volume-up btn"  v-if="firstLoadPoster">
+      <button class="volume-up btn" v-if="firstLoadPoster">
         <i class="fas fa-volume-up vector-volume" v-if="videoEvent === false" v-on:click="volumeSelect(true)"></i>
         <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === true" v-on:click="volumeSelect(false)"></i>
         <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo(false)"></i>
@@ -156,7 +160,8 @@ watch:{
 }
 
 .top-main-motion {
- width: 100vw;
- height: calc(100vw/1.77);
+    background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+    width: 100vw;
+    height: calc(100vw/1.77);
 }
 </style>

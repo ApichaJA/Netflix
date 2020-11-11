@@ -63,8 +63,10 @@ export default {
 nav {
   padding: 1.1vh 3vw;
   z-index: 2;
+  width: 100%;
   position: fixed;
   background-color: transparent;
+  background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
 }
 
 .nav-item{
