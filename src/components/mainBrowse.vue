@@ -4,14 +4,14 @@
   <div class="videoWrapper">
     <div class="feach-video" v-on:change="volumeSelect('unmuted')">
        <img class="poster" :class="{'outposter': mainVideoOnload === false}" src="@/assets/videos/wywlepposter.jpg">
-    <video ref="videoRef" autoplay class="top-main-motion" v-bind:muted="videoEvent === 'muted'" @ended="videoEnd('ended')">
+    <video ref="videoRef" :muted='videoEvent' autoplay class="top-main-motion" @ended="videoEnd('ended')">
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-right-info">
       <button class="volume-up btn">
-        <i class="fas fa-volume-up vector-volume" v-if="videoEvent === 'unmuted'" v-on:click="volumeSelect('muted')"></i>
-        <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === 'muted'" v-on:click="volumeSelect('unmuted')"></i>
-        <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo('unmuted')"></i>
+        <i class="fas fa-volume-up vector-volume" v-if="videoEvent === false" v-on:click="volumeSelect(true)"></i>
+        <i class="fas fa-volume-mute vector-volume" v-if="videoEvent === true" v-on:click="volumeSelect(false)"></i>
+        <i class="fas fa-redo vector-volume" v-if="videoEvent === 'ended'" v-on:click="replayVideo(false)"></i>
         </button>
       <div class="rating-main-box"><span>13+</span></div>
     </div>
@@ -25,17 +25,18 @@
 export default {
   data() {
     return {
-        autoplay: true,
         mainVideoOnload: true,
-        videoEvent: "ended",
+        videoEvent: true,
     };
   },
   methods: {
     volumeSelect: function(event){
       this.videoEvent = event;
+      this.$refs.videoRef.muted = 'true';
     },
     videoEnd: function (event) {
       this.videoEvent = event;
+      this.$refs.videoRef.muted = 'false';
     },
     replayVideo: function(event){
       this.videoEvent = event;
@@ -51,8 +52,10 @@ export default {
   mounted(){
     setTimeout(() => {
       this.mainVideoOnload = false
+      this.$refs.videoRef.play();
       },2000)
     },
+    
 }
 </script>
 
