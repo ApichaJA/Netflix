@@ -64,8 +64,11 @@ watch:{
                 if (inView) return;
                 this.tabFocus = true;
                 inView = true;
-                this.showPoster = false;
-                this.$refs.videoRef.play();
+                setTimeout(() => {
+                    this.showPoster = false;
+                    this.$refs.videoRef.play();
+                },500)
+
             } else if (inView) {
                 this.tabFocus = !this.tabFocus;
                 inView = false;
