@@ -8,7 +8,12 @@
       <source :src="topvideo" type="video/mp4">
     </video>
     <div class="site-left-info">
-
+        <div class="play-info">
+        <button class="btn btn-site-left">
+            <i class="fas fa-play"></i>
+            <span class="site-left-play">Play</span>
+        </button>
+        </div>
     </div>
 
     <div class="site-right-info">
@@ -127,6 +132,29 @@ watch:{
 
 .feach-video{
   position: relative;
+}
+
+.site-left-info{
+  display: flex;
+  position: absolute;
+  padding: 0 3.1vw;
+  left: 0;
+  bottom: 17.5vw;
+}
+
+.btn-site-left{
+    background-color: #fff;
+    color: #000!important;
+    padding: .7vw 1.85vw .5vw 1.85vw;
+}
+
+.btn-site-left i{
+    font-size: 1.2vw;
+}
+
+.site-left-play{
+    margin-left: .9vw;
+    font-size: 1.2vw;
 }
 
 .site-right-info{
