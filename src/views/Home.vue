@@ -11,12 +11,9 @@
                 </div>
             </div>
             <div class="my-list-cal">
-                <div class="video-content-box"></div>
-                <div class="video-content-box"></div>
-                <div class="video-content-box"></div>
-                <div class="video-content-box"></div>
-                <div class="video-content-box"></div>
-                <div class="video-content-box"></div>
+                <div v-for="movieLists in movieList" :key="movieLists.title" class="video-content-box">
+                    <img class="poster" :src="require('@/assets/movieJson/img/'+movieLists.poster)">
+                </div>
             </div>
         </div>
         <div class="movie-content">
@@ -44,12 +41,23 @@
 
 <script>
 import mainBrowse from "@/components/mainBrowse";
+import data from '@/assets/movieJson/json/top-rated-movies-01.json'
+
+
 export default {
     components: {
         mainBrowse
     },
     data() {
-        return {}
+        return {
+            movieList: [],
+        }
+    },
+    
+    watch:{
+        movieList:(data)=>{
+            console.log(data)
+        }
     },
 
     methods: {
@@ -68,6 +76,14 @@ export default {
             }, 2000)
             document.querySelector(".poster").classList.remove("outposter");
         });
+        data.forEach(element => {
+            if(this.movieList.length <= 5){
+                this.movieList.push(element)
+            }
+
+        });
+       
+
     },
 }
 </script>
@@ -147,6 +163,13 @@ export default {
     height: 8.5vw;
     margin: .1vw;
     background-color: #fff;
+    border-radius: 5px;
+}
+
+.poster{
+    width: 15.5vw;
+    height: 8.5vw;
+    object-fit: cover;
     border-radius: 5px;
 }
 </style>
