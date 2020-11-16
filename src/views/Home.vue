@@ -24,7 +24,7 @@
                 class="movieposter"
                 :src="require('@/assets/movieJson/img/' + movieLists.poster)"
               />
-              <div class="movieinfo">hello</div>
+              <div :name="movieLists.title" class="movieinfo">hello</div>
             </div>
           </div>
         </div>
@@ -90,26 +90,36 @@ export default {
 
   mounted() {
     var onOver = document.querySelector(".my-list-cal");
-    var isHover = '';
-        onOver.addEventListener("mouseover", function (event) {
-            if(isHover != ''){
-                isHover.classList.remove('unnone')
-            }
-        document.querySelector(".top-main-motion").pause();
-        isHover = event.target.nextSibling
-        event.target.nextSibling.classList.add('unnone')
+    var isHover = "";
+    var pastHover = "";
+    var fastChange = 0;
+
+    onOver.addEventListener("mouseover", function (event) {
+        isHover = event.target.nextSibling;
+        if(fastChange === 1){
+            pastHover.classList.remove("showinfo")
+            event.target.nextSibling.classList.add("showinfo");
+            pastHover = isHover;
+        }
+        else{
+            pastHover = isHover;
+            document.querySelector(".top-main-motion").pause();
+            event.target.nextSibling.classList.add("showinfo");
+        fastChange = 1
+        }
     });
-    onOver.addEventListener("mouseleave", function (event) {
-      setTimeout(() => {
-        document.querySelector(".poster").classList.add("outposter");
+    onOver.addEventListener("mouseleave", function () {
+        setTimeout(() => {
+            document.querySelector(".poster").classList.add("outposter");
         if (document.querySelector(".top-main-motion") != "ended") {
-          document.querySelector(".top-main-motion").play();
+            document.querySelector(".top-main-motion").play();
         }
       }, 2000);
-        console.log(event.target)
       document.querySelector(".poster").classList.remove("outposter");
-        isHover.classList.remove('unnone')
-        });
+      isHover.classList.remove("showinfo")
+      pastHover = isHover;
+      fastChange = 0;
+    });
   },
 };
 </script>
@@ -230,7 +240,7 @@ export default {
   margin-top: 2vw;
   color: #fff;
 }
-.unnone {
-  display: block!important;
+.showinfo {
+  display: block !important;
 }
 </style>
