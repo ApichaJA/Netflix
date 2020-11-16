@@ -47,6 +47,17 @@
                       </button>
                           </div>
                       </div>
+                          <div class="menu-more-detail">
+                              <div class="content-more-match">{{movieLists.contentRating}}% Match</div>
+                              <div class="content-more-duration">{{durationTime(movieLists.duration)}}</div>
+                              <div class="content-more-contentRating">{{movieLists.contentRating}}+</div>
+                              <div class="content-more-year">{{movieLists.year}}</div>
+                          </div>
+                          <div class="detail-genres">
+                          <div class="menu-more-detail-inline" v-for="genres in movieLists.genres" :key="genres">
+                              <div class="content-more-genres">{{genres}}<span> &bull;</span> </div>
+                          </div>
+                          </div>
                   </div>
               </div>
             </div>
@@ -92,10 +103,17 @@ export default {
     };
   },
 
-  computed: {},
+  computed: {
+      },
 
   methods: {
-  },
+      durationTime(duaration){
+          var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(10)
+          var min = (duaration.replace("PT", "").replace("M", "") % 60).toString(10)
+          var time = hr+"h "+min+"m"
+          return time
+      },
+      },
 
   created() {
     data.forEach((element) => {
@@ -288,5 +306,40 @@ export default {
 .posi-icon{
     display: flex;
     justify-content: space-between;
+}
+
+.menu-more-detail{
+    display: flex;
+    margin-left: .5vw;
+    text-align: left;
+    font-size: .55vw;
+    padding: .1vw 0 0 0;
+}
+
+.menu-more-detail > div{
+    margin-right: .3vw;
+}
+
+.content-more-match{
+    color: #46d369;
+}
+
+.content-more-contentRating{
+    border: 1px solid gray;
+    padding: 0 .4vw;
+}
+
+.menu-more-detail-inline{
+    display: inline-block;
+    font-size: .55vw;
+}
+
+.detail-genres{
+    text-align: left;
+    padding: 0 .4vw;
+}
+
+.content-more-genres span{
+    font-size: 1vw;
 }
 </style>
