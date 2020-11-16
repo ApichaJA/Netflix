@@ -20,11 +20,13 @@
           >
             <div class="movie-group">
               <img
-                :name="movieLists.title"
+               
                 class="movieposter"
                 :src="require('@/assets/movieJson/img/' + movieLists.poster)"
               />
-              <div :name="movieLists.title" class="movieinfo">hello</div>
+              <div class="movieinfo">
+                  
+              </div>
             </div>
           </div>
         </div>
@@ -93,8 +95,10 @@ export default {
     var isHover = "";
     var pastHover = "";
     var fastChange = 0;
-
     onOver.addEventListener("mouseover", function (event) {
+        //WanaFix??
+        event.target.nextSibling.addEventListener("click", function () {
+        })
         isHover = event.target.nextSibling;
         if(fastChange === 1){
             pastHover.classList.remove("showinfo")
