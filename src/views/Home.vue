@@ -12,7 +12,7 @@
             ></span>
           </div>
         </div>
-        <div class="my-list-cal" v-if="moreInfo">
+        <div class="my-list-cal">
           <div
             v-for="movieLists in movieList"
             :key="movieLists.title"
@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       movieList: [],
-      moreInfo: true,
+      moreInfo: false,
       count: 0,
     };
   },
@@ -89,16 +89,9 @@ export default {
   computed: {},
 
   methods: {
-    showmore: () => {
-      if (this.moreInfo === true) {
-        this.moreInfo = false;
-        console.log(this.moreInfo);
-      } else this.moreInfo = false;
-      console.log(this.moreInfo);
-    },
   },
 
-  beforeMount() {
+  created() {
     data.forEach((element) => {
       if (this.movieList.length <= 5) {
         this.movieList.push(element);
@@ -113,11 +106,11 @@ export default {
     var fastChange = 0;
     onOver.addEventListener("mouseover", function (event) {
         //WanaFix??
-        event.target.nextSibling.addEventListener("click", function () {
-        })
         isHover = event.target.nextSibling;
         if(fastChange === 1){
-            pastHover.classList.remove("showinfo")
+            if(pastHover !== isHover){
+                pastHover.classList.remove("showinfo")
+            }
             event.target.nextSibling.classList.add("showinfo");
             pastHover = isHover;
         }
@@ -260,21 +253,25 @@ export default {
   color: #fff;
   padding: 1vw;
 }
+
+.movieinfo:hover {
+  display: block;
+}
+
 .showinfo {
-  display: block !important;
+  display: block;
 }
 
 .icon-menu{
-    width: fit-content;
     color: white;
-    transform: scale(2);
-    margin-right: .5vw;
-}
-
-.info-menu-group-icon{
 }
 
 .info-menu-group{
     display: flex;
+}
+
+.btn{
+    margin: 0;
+    padding: 0 1vw 0 0;
 }
 </style>
