@@ -26,21 +26,27 @@
               />
               <div class="movieinfo">
                   <div class="info-menu-group">
+                      <div class="posi-icon">
+                          <div class="icon-left">
                       <button class="btn icon-menu">
-                      <i class="fas fa-play-circle info-menu-group-icon"></i>
+                      <i class="fas iconscale fa-play-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
                       <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas fa-thumbs-up"></i>
+                          <i class="fas iconscale fa-thumbs-up"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas fa-thumbs-down"></i>
+                          <i class="fas iconscale fa-thumbs-down"></i>
                       </button>
+                          </div>
+                          <div class="icon-right">
                       <button class="btn icon-menu">
-                          <i class="fas fa-chevron-circle-down"></i>
+                          <i class="fas iconscale fa-chevron-circle-down"></i>
                       </button>
+                          </div>
+                      </div>
                   </div>
               </div>
             </div>
@@ -249,7 +255,7 @@ export default {
 }
 
 .movieinfo {
-  display: block;
+  display: none;
   color: #fff;
   padding: 1vw;
 }
@@ -264,14 +270,23 @@ export default {
 
 .icon-menu{
     color: white;
+    width: 2.3vw;
+    font-size: 1.5vw;
 }
 
-.info-menu-group{
+
+.icon-left{
     display: flex;
+    width: 12vw;
 }
 
 .btn{
     margin: 0;
-    padding: 0 1vw 0 0;
+    padding: 0 0 0 0;
+}
+
+.posi-icon{
+    display: flex;
+    justify-content: space-between;
 }
 </style>
