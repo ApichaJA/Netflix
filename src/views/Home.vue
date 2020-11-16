@@ -25,7 +25,23 @@
                 :src="require('@/assets/movieJson/img/' + movieLists.poster)"
               />
               <div class="movieinfo">
-                  
+                  <div class="info-menu-group">
+                      <button class="btn icon-menu">
+                      <i class="fas fa-play-circle info-menu-group-icon"></i>
+                      </button>
+                      <button class="btn icon-menu">
+                      <i class="far fa-check-circle info-menu-group-icon"></i>
+                      </button>
+                      <button class="btn icon-menu">
+                          <i class="fas fa-thumbs-up"></i>
+                      </button>
+                      <button class="btn icon-menu">
+                          <i class="fas fa-thumbs-down"></i>
+                      </button>
+                      <button class="btn icon-menu">
+                          <i class="fas fa-chevron-circle-down"></i>
+                      </button>
+                  </div>
               </div>
             </div>
           </div>
@@ -240,11 +256,25 @@ export default {
 }
 
 .movieinfo {
-  display: none;
-  margin-top: 2vw;
+  display: block;
   color: #fff;
+  padding: 1vw;
 }
 .showinfo {
   display: block !important;
+}
+
+.icon-menu{
+    width: fit-content;
+    color: white;
+    transform: scale(2);
+    margin-right: .5vw;
+}
+
+.info-menu-group-icon{
+}
+
+.info-menu-group{
+    display: flex;
 }
 </style>
