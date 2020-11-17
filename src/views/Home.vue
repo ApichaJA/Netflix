@@ -18,7 +18,7 @@
             :key="movieLists.title"
             class="video-content-box"
           >
-            <div
+            <div id="movie-static" onchange="myFunction()"
               :class="{
                 'show-more-detail': moreInfo === movieLists.title,
                 'movie-group': moreInfo === '',
@@ -199,6 +199,10 @@ export default {
     var isHover = "";
     var pastHover = "";
     var fastChange = 0;
+
+onOver.addEventListener("click", function () {
+    fastChange = 0
+})
     onOver.addEventListener("mouseover", function (event) {
       //WanaFix??
       isHover = event.target.nextSibling;
@@ -206,8 +210,8 @@ export default {
         if (pastHover !== isHover) {
           pastHover.classList.remove("showinfo");
         }
-        event.target.nextSibling.classList.add("showinfo");
         pastHover = isHover;
+        event.target.nextSibling.classList.add("showinfo");
       } else if(!event.target.classList.contains('movieposter-more')) {
         pastHover = isHover;
         document.querySelector(".top-main-motion").pause();
