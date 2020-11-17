@@ -55,32 +55,34 @@
       
       
       <div class="nav-right">
+        <div class="search-box">
+          <button class="btn-box">
+            <i class=" fas fa-search btn-search"></i>
+          </button>
+          <input class="input-search-box" type="text" placeholder="Title,people,genres">
+        </div>
       
-      <div>
-            <button class="btn">
-        <i class=" fas fa-search nav-icon"></i>
-      </button>
-      </div>
+        <div class="gift-box">
+          <button class="btn-box">
+            <i class="fas fa-gift btn-gift"></i>
+          </button>
+        </div>
       
-      <div>
-            <button class="btn">
-        <i class="fas fa-gift nav-icon"></i>
-      </button>
-      </div>
+        <div class="noti-box">
+          <button class="btn-box">
+            <i class="fas fa-bell btn-noti"></i>
+          </button>
+        </div>
       
-      <div>
-            <button class="btn">
-        <i class="fas fa-bell nav-icon"></i>
-      </button>
+        <div class="acc-box">
+          <button class="btn-box">
+            <i class="fas fa-user-circle btn-account"></i>
+            <i class="fas fa-caret-down btn-caret-account"></i>
+          </button>
+        </div>
+
       </div>
-      
-      <div>
-            <button class="btn">
-        <i class="fas fa-user-circle btn-account"></i>
-        <i class="fas fa-caret-down btn-caret-account"></i>
-      </button>
-      </div>
-      </div>
+
     </ul>
   </nav>
 </template>
@@ -121,21 +123,6 @@ nav {
   align-items: center;
 }
 
-.nav-icon {
-  color: #e5e5e5 !important;
-  font-size: 1.6vw;
-}
-
-.btn-account{
-  color:#e5e5e5 !important;
-  font-size:25px; 
-  margin-right:5px;
-}
-
-.btn-caret-account{
-  color:#e5e5e5 !important;
-}
-
 .nav-right{
   display: flex;
   align-items: center;
@@ -145,4 +132,88 @@ nav {
   right: 4%;
   height: 100%;
 }
+
+.btn-search{
+  color: #fff;
+  font-size: 1.3vw;
+  margin: 7px;
+  padding: 0px;
+}
+
+.btn-gift{
+  color:#fff;
+  font-size: 1.6vw;
+  margin-right: 1em;
+}
+
+.btn-noti{
+  color: #fff;
+  font-size: 1.6vw;
+  margin-right: 1em;
+}
+
+.btn-account{
+  color:#fff;
+  font-size:25px;
+  margin-right: 0.5em;
+}
+
+.btn-caret-account{
+  position: relative;
+  top: -5px;
+  color: #fff;
+  font-size: 11px;
+}
+
+.btn-box{
+  background-color: transparent;
+  text-align: center;
+
+}
+
+div.search-box{
+  position: relative;
+}
+
+.search-box{
+  padding: 2px;
+  border: 1px solid #e5e5e5;
+  background-color: #000;
+  margin: 1em;
+}
+
+.gift-box{
+  position: relative;
+  text-align: center;
+  margin: 10px;
+}
+
+.noti-box{
+  position: relative;
+  text-align: center;
+  margin: 10px;
+}
+
+
+.input-search-box{
+  /* display: none; */
+  text-align: left;
+  margin: auto;
+  width: 200px;
+  height: 30px;
+  background-color: #000;
+  color:#fff;
+  font-size: 12px;
+}
+
+.input-search-box:focus, button:focus{
+  outline: none;
+}
+
+button, input{
+  border: none;
+  margin: 0px;
+  padding: 0px;
+}
+
 </style>

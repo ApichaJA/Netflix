@@ -2,9 +2,13 @@
   <div>
     <mainBrowse />
     <div class="main-home">
-      <div class="movie-content">
+      <div
+        class="movie-content"
+        v-for="(listmovies, index) in name"
+        :key="index"
+      >
         <div class="list-name">
-          <span class="content-list">My List</span>
+          <span class="content-list">{{ listmovies }}</span>
           <div class="explore-all">
             <span class="more-link">Explore All</span>
             <span class="more-link-run"
@@ -14,7 +18,7 @@
         </div>
         <div class="my-list-cal">
           <div
-            v-for="movieList in randommovie()"
+            v-for="movieList in showmovie(listmovies)"
             :key="movieList.title"
             class="video-content-box"
           >
@@ -79,7 +83,7 @@
                     <div class="content-more-year">{{ movieList.year }}</div>
                   </div>
                   <div class="content-more-genres">
-                    {{ genres(movieList.genres) }}
+                    {{ genres(movieList.genres) }} •
                   </div>
                 </div>
               </div>
@@ -116,7 +120,7 @@
 
                     <div class="menu-more-detail-inline">
                       <span style="color: #777">Genres: </span
-                      >{{ genres(movieList.genres) }}
+                      >{{ genres(movieList.genres) }} •
                     </div>
                   </div>
                 </div>
@@ -128,7 +132,9 @@
                         <div>
                           <div
                             class="col-4 more-like-col"
-                            v-for="moreLikevideos in moreLikevideo"
+                            v-for="moreLikevideos in moreLikevideoSort(
+                              movieList.genres
+                            )"
                             :key="moreLikevideos.title"
                           >
                             <div class="more-like-this-box">
@@ -172,9 +178,9 @@
                         >
                         <span class="about-movie-sec-text-head"
                           >Genres:
-                          <span class="about-movie-sec-text">{{
-                            genres(movieList.genres)
-                          }}</span></span
+                          <span class="about-movie-sec-text"
+                            >{{ genres(movieList.genres) }} •
+                          </span></span
                         >
                         <span class="about-movie-sec-text-head"
                           >Maturity rating:
@@ -210,30 +216,33 @@ export default {
   },
   data() {
     return {
-      movieStock: [{
-        "actionMovieList" : [],
-        "crimeMovieList" : [{}],
-        "dramaMovieList" : [{}],
-        "biographyMovieList" : [{}],
-        "historyMovieList" : [{}],
-        "adventureMovieList" : [{}],
-        "fantasyMovieList" : [{}],
-        "comedyMovieList" : [{}],
-        "romanceMovieList" : [{}],
-        "sciFiMovieList" : [{}],
-      }],
-      //actionMovieList: [],
-      //crimeMovieList: [],
-      //dramaMovieList: [],
-      //biographyMovieList: [],
-      //historyMovieList: [],
-      //adventureMovieList: [],
-      //fantasyMovieList: [],
-      //comedyMovieList: [],
-      //romanceMovieList: [],
-      //sciFiMovieList: [],
-      
-      moreLikevideo: [],
+      movieStock: {
+        actionMovieList: [],
+        crimeMovieList: [],
+        dramaMovieList: [],
+        biographyMovieList: [],
+        historyMovieList: [],
+        adventureMovieList: [],
+        fantasyMovieList: [],
+        comedyMovieList: [],
+        romanceMovieList: [],
+        sciFiMovieList: [],
+      },
+
+      name: [
+        "actionMovieList",
+        "crimeMovieList",
+        "dramaMovieList",
+        "biographyMovieList",
+        "historyMovieList",
+        "adventureMovieList",
+        "fantasyMovieList",
+        "comedyMovieList",
+        "romanceMovieList",
+        "sciFiMovieList",
+      ],
+      movieInlist: [],
+      moreLikevideoInlist: [],
       moreInfo: "",
       count: 0,
     };
@@ -242,9 +251,38 @@ export default {
   computed: {},
 
   methods: {
-      randommovie(){
-          return this.moreLikevideo
-      },
+    showmovie(orderMovie) {
+      return this.movieStock[orderMovie];
+    },
+
+    moreLikevideoSort(orderMovie) {
+      var toArr = [];
+      orderMovie.forEach((element) => {
+        toArr.push(element);
+      });
+      var genMovie = [];
+      top_movie.forEach((element) => {
+          console.log()
+        if (
+          (toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
+            element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] ||
+            toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
+              element.genres[
+                ~~(Math.floor(Math.random() * 100)/10%element.genres.length)
+              ] ||
+            toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
+              element.genres[
+                ~~(Math.floor(Math.random() * 100)/10%element.genres.length)
+              ]) &&
+          genMovie.length < 9 &&
+          this.moreLikevideoInlist.indexOf(element.title) !== -1
+        ) {
+          genMovie.push(element);
+        }
+      });
+      return genMovie;
+    },
+
     durationTime(duaration) {
       var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(
         10
@@ -282,7 +320,7 @@ export default {
     genres(genre) {
       var gen = "";
       genre.forEach((element) => {
-        gen += element + " • ";
+        gen += element + " ";
       });
       return gen;
     },
@@ -290,60 +328,97 @@ export default {
 
   created() {
     top_movie.forEach((element) => {
-        if (this.movieStock[0]["actionMovieList"].length <= 5) {
-            if (element.genres.indexOf("Action") > -1) {
-                this.movieStock[0]["actionMovieList"].push(element);
-        console.log(this.movieStock[0]["actionMovieList"])
+      if (this.movieStock["actionMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Action" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["actionMovieList"].push(element);
+          this.movieInlist.push(element.title);
         }
       }
-    //    else if (this.crimeMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Crime') > -1){
-    //            this.crimeMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.dramaMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Drama') > -1){
-    //            this.dramaMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.biographyMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Biography') > -1){
-    //            this.biographyMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.historyMovieList.length <= 5) {
-    //        if(element.genres.indexOf('History') > -1){
-    //            this.historyMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.adventureMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Adventure') > -1){
-    //            this.adventureMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.fantasyMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Fantasy') > -1){
-    //            this.fantasyMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.comedyMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Comedy') > -1){
-    //            this.comedyMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.romanceMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Romance') > -1){
-    //            this.romanceMovieList.push(element);
-    //        }
-    //    }
-    //    else if (this.sciFiMovieList.length <= 5) {
-    //        if(element.genres.indexOf('Sci-Fi') > -1){
-    //            this.sciFiMovieList.push(element);
-    //        }
-    //     }
-
-      if (this.moreLikevideo.length < 9) {
-        this.moreLikevideo.push(element);
+      if (this.movieStock["crimeMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Crime" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["crimeMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["dramaMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Drama" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["dramaMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["biographyMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Biography" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["biographyMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["historyMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "History" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["historyMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["adventureMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Adventure" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["adventureMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["fantasyMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Fantasy" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["fantasyMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["comedyMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Comedy" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["comedyMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["romanceMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Romance" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["romanceMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+      if (this.movieStock["sciFiMovieList"].length <= 5) {
+        if (
+          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Sci-Fi" &&
+          this.movieInlist.indexOf(element.title) === -1
+        ) {
+          this.movieStock["sciFiMovieList"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      } else {
+        this.moreLikevideoInlist.push(element.title);
       }
     });
   },
