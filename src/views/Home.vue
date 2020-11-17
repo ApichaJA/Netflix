@@ -14,29 +14,29 @@
         </div>
         <div class="my-list-cal">
           <div
-            v-for="movieLists in movieList"
-            :key="movieLists.title"
+            v-for="movieList in randommovie()"
+            :key="movieList.title"
             class="video-content-box"
           >
             <div
               :class="{
-                'show-more-detail': moreInfo === movieLists.title,
+                'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
               }"
             >
               <button
                 class="btn close-popup"
                 v-on:click="showmoredetailVideo('')"
-                v-if="moreInfo === movieLists.title"
+                v-if="moreInfo === movieList.title"
               >
                 <i class="far fa-times-circle"></i>
               </button>
               <img
                 :class="{
-                  'movieposter-more': moreInfo === movieLists.title,
-                  movieposter: moreInfo !== movieLists.title,
+                  'movieposter-more': moreInfo === movieList.title,
+                  movieposter: moreInfo !== movieList.title,
                 }"
-                :src="require('@/assets/movieJson/img/' + movieLists.poster)"
+                :src="require('@/assets/movieJson/img/' + movieList.poster)"
               />
               <div class="movieinfo">
                 <div class="info-menu-group">
@@ -59,7 +59,7 @@
                     </div>
                     <div
                       class="icon-right"
-                      v-on:click="showmoredetailVideo(movieLists.title)"
+                      v-on:click="showmoredetailVideo(movieList.title)"
                     >
                       <button class="btn icon-menu">
                         <i class="fas iconscale fa-chevron-circle-down"></i>
@@ -68,126 +68,132 @@
                   </div>
                   <div class="menu-more-detail">
                     <div class="content-more-rating">
-                      {{ rating(movieLists.imdbRating) }}% Match
+                      {{ rating(movieList.imdbRating) }}% Match
                     </div>
                     <div class="content-more-duration">
-                      {{ durationTime(movieLists.duration) }}
+                      {{ durationTime(movieList.duration) }}
                     </div>
                     <div class="content-more-contentRating">
-                      {{ movieLists.contentRating }}+
+                      {{ movieList.contentRating }}+
                     </div>
-                    <div class="content-more-year">{{ movieLists.year }}</div>
+                    <div class="content-more-year">{{ movieList.year }}</div>
                   </div>
-                      <div class="content-more-genres">
-                        {{ genres(movieLists.genres) }}
-                      </div>
-   
+                  <div class="content-more-genres">
+                    {{ genres(movieList.genres) }}
+                  </div>
                 </div>
               </div>
               <div
                 class="more-detail-content"
-                v-if="moreInfo === movieLists.title"
+                v-if="moreInfo === movieList.title"
               >
                 <div
                   class="shadow-movie"
-                  v-if="moreInfo === movieLists.title"
+                  v-if="moreInfo === movieList.title"
                 ></div>
                 <div class="menu-more-detail-full">
                   <div class="content-more-rating">
-                    {{ rating(movieLists.imdbRating) }}% Match
+                    {{ rating(movieList.imdbRating) }}% Match
                   </div>
                   <div class="content-more-duration">
-                    {{ durationTime(movieLists.duration) }}
+                    {{ durationTime(movieList.duration) }}
                   </div>
                   <div class="content-more-contentRating">
-                    {{ movieLists.contentRating }}+
+                    {{ movieList.contentRating }}+
                   </div>
-                  <div class="content-more-year">{{ movieLists.year }}</div>
+                  <div class="content-more-year">{{ movieList.year }}</div>
                 </div>
                 <div class="row p-2">
                   <div class="col-8 mt-4">
-                    {{ movieLists.storyline }}
+                    {{ movieList.storyline }}
                   </div>
                   <div class="col-4">
-                    <div
-                      class="menu-more-detail-inline">
-                      <span style="color: #777">Cast: </span>{{ actors(movieLists.actors) }}
+                    <div class="menu-more-detail-inline">
+                      <span style="color: #777">Cast: </span
+                      >{{ actors(movieList.actors) }}
                     </div>
                     <div style="display: block" class="mt-3"></div>
-                    
+
                     <div class="menu-more-detail-inline">
-                      <span style="color: #777">Genres: </span>{{ genres(movieLists.genres) }}
+                      <span style="color: #777">Genres: </span
+                      >{{ genres(movieList.genres) }}
                     </div>
                   </div>
                 </div>
                 <div class="more-like">
                   <span class="more-like-text">More Like This</span>
                   <div class="more-like-video">
-                      <div class="row">
-                    <div
-                      class="more-like-this-video"
-                    >
-                    <div>
-
-                    
-                    <div class="col-4 more-like-col" v-for="moreLikevideos in moreLikevideo"
-                      :key="moreLikevideos.title">
-
-                      <div class="more-like-this-box">
-                        <img
-                          class="more-like-this-img"
-                          :src="
-                            require('@/assets/movieJson/img/' +
-                              moreLikevideos.poster)
-                          "
-                        />
-                        <div class="more-like-this-content">
-                        <div class="content-more-rating">{{rating(moreLikevideos.imdbRating)}} % Match</div>
-                         <div class="content-more-contentRating-year">
-                    <span class="content-more-contentRating">{{ moreLikevideos.contentRating }}+</span>
-                  <span class="content-more-year">{{ moreLikevideos.year }}</span>
-                  </div>
-                  <div class="content-more-story mt-3">
-                 {{ shortStory(moreLikevideos.storyline) }}
-                  </div>
+                    <div class="row">
+                      <div class="more-like-this-video">
+                        <div>
+                          <div
+                            class="col-4 more-like-col"
+                            v-for="moreLikevideos in moreLikevideo"
+                            :key="moreLikevideos.title"
+                          >
+                            <div class="more-like-this-box">
+                              <img
+                                class="more-like-this-img"
+                                :src="
+                                  require('@/assets/movieJson/img/' +
+                                    moreLikevideos.poster)
+                                "
+                              />
+                              <div class="more-like-this-content">
+                                <div class="content-more-rating">
+                                  {{ rating(moreLikevideos.imdbRating) }} %
+                                  Match
+                                </div>
+                                <div class="content-more-contentRating-year">
+                                  <span class="content-more-contentRating"
+                                    >{{ moreLikevideos.contentRating }}+</span
+                                  >
+                                  <span class="content-more-year">{{
+                                    moreLikevideos.year
+                                  }}</span>
+                                </div>
+                                <div class="content-more-story mt-3">
+                                  {{ shortStory(moreLikevideos.storyline) }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                      </div>
+                      <div class="about-movie">
+                        <span class="about-movie-main-text"
+                          >About {{ movieList.title }}</span
+                        >
+                        <span class="about-movie-sec-text-head mt-3"
+                          >Cast:
+                          <span class="about-movie-sec-text">
+                            {{ actors(movieList.actors) }}</span
+                          ></span
+                        >
+                        <span class="about-movie-sec-text-head"
+                          >Genres:
+                          <span class="about-movie-sec-text">{{
+                            genres(movieList.genres)
+                          }}</span></span
+                        >
+                        <span class="about-movie-sec-text-head"
+                          >Maturity rating:
+                          <span
+                            class="about-movie-sec-text content-more-contentRating"
+                          >
+                            {{ movieList.contentRating }}+ </span
+                          ><span class="about-movie-sec-text ml-3"
+                            >Recomended for ages
+                            {{ movieList.contentRating }} and up</span
+                          ></span
+                        >
+                      </div>
                     </div>
-                      </div>
-                      </div>
-                    </div>
-                  <div class="about-movie">
-                      <span class="about-movie-main-text">About {{movieLists.title}}</span>
-                      <span class="about-movie-sec-text-head mt-3">Cast: <span class="about-movie-sec-text"> {{actors(movieLists.actors)}}</span></span>
-                      <span class="about-movie-sec-text-head">Genres: <span class="about-movie-sec-text">{{genres(movieLists.genres)}}</span></span>
-                      <span class="about-movie-sec-text-head">Maturity rating: <span class="about-movie-sec-text content-more-contentRating">
-                          {{ movieLists.contentRating }}+
-                          </span><span class="about-movie-sec-text ml-3">Recomended for ages {{ movieLists.contentRating }} and up</span></span>
-                  </div>
-                      </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="movie-content">
-        <div class="list-name">
-          <span class="content-list">Romantic Korean TV Shows</span>
-          <div class="explore-all">
-            <span class="more-link">Explore All</span>
-            <span class="more-link-run"
-              ><i class="fas fa-chevron-right"></i
-            ></span>
-          </div>
-        </div>
-        <div class="my-list-cal">
-          <div class="video-content-box"></div>
-          <div class="video-content-box"></div>
-          <div class="video-content-box"></div>
-          <div class="video-content-box"></div>
-          <div class="video-content-box"></div>
-          <div ref="modal" class="video-content-box"></div>
         </div>
       </div>
     </div>
@@ -204,7 +210,29 @@ export default {
   },
   data() {
     return {
-      movieList: [],
+      movieStock: [{
+        "actionMovieList" : [],
+        "crimeMovieList" : [{}],
+        "dramaMovieList" : [{}],
+        "biographyMovieList" : [{}],
+        "historyMovieList" : [{}],
+        "adventureMovieList" : [{}],
+        "fantasyMovieList" : [{}],
+        "comedyMovieList" : [{}],
+        "romanceMovieList" : [{}],
+        "sciFiMovieList" : [{}],
+      }],
+      //actionMovieList: [],
+      //crimeMovieList: [],
+      //dramaMovieList: [],
+      //biographyMovieList: [],
+      //historyMovieList: [],
+      //adventureMovieList: [],
+      //fantasyMovieList: [],
+      //comedyMovieList: [],
+      //romanceMovieList: [],
+      //sciFiMovieList: [],
+      
       moreLikevideo: [],
       moreInfo: "",
       count: 0,
@@ -214,6 +242,9 @@ export default {
   computed: {},
 
   methods: {
+      randommovie(){
+          return this.moreLikevideo
+      },
     durationTime(duaration) {
       var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(
         10
@@ -229,39 +260,88 @@ export default {
       this.moreInfo = more;
     },
 
-    shortStory(story){
-        var shortsty = ''
-        for (let count = 0; shortsty.length < 100; count++) {
-            shortsty += story[count]
-        }
-        return shortsty + '.'
+    shortStory(story) {
+      var shortsty = "";
+      for (let count = 0; shortsty.length < 100; count++) {
+        shortsty += story[count];
+      }
+      return shortsty + ".";
     },
-    rating(rate){
-        var rating = rate * 10
-        return rating
+    rating(rate) {
+      var rating = rate * 10;
+      return rating;
     },
-    actors(actor){
-        var act = ''
-        actor.forEach(element => {
-            act += element+', '
-        });
-        return act
+    actors(actor) {
+      var act = "";
+      actor.forEach((element) => {
+        act += element + ", ";
+      });
+      return act;
     },
 
-    genres(genre){
-        var gen = ''
-        genre.forEach(element => {
-            gen += element+' • '
-        });
-        return gen
-    }
+    genres(genre) {
+      var gen = "";
+      genre.forEach((element) => {
+        gen += element + " • ";
+      });
+      return gen;
+    },
   },
 
   created() {
     top_movie.forEach((element) => {
-      if (this.movieList.length <= 5) {
-        this.movieList.push(element);
+        if (this.movieStock[0]["actionMovieList"].length <= 5) {
+            if (element.genres.indexOf("Action") > -1) {
+                this.movieStock[0]["actionMovieList"].push(element);
+        console.log(this.movieStock[0]["actionMovieList"])
+        }
       }
+    //    else if (this.crimeMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Crime') > -1){
+    //            this.crimeMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.dramaMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Drama') > -1){
+    //            this.dramaMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.biographyMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Biography') > -1){
+    //            this.biographyMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.historyMovieList.length <= 5) {
+    //        if(element.genres.indexOf('History') > -1){
+    //            this.historyMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.adventureMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Adventure') > -1){
+    //            this.adventureMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.fantasyMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Fantasy') > -1){
+    //            this.fantasyMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.comedyMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Comedy') > -1){
+    //            this.comedyMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.romanceMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Romance') > -1){
+    //            this.romanceMovieList.push(element);
+    //        }
+    //    }
+    //    else if (this.sciFiMovieList.length <= 5) {
+    //        if(element.genres.indexOf('Sci-Fi') > -1){
+    //            this.sciFiMovieList.push(element);
+    //        }
+    //     }
+
       if (this.moreLikevideo.length < 9) {
         this.moreLikevideo.push(element);
       }
@@ -318,9 +398,16 @@ export default {
 <style scoped>
 .main-home {
   z-index: 2;
+  background-image: linear-gradient(
+    to top,
+    rgba(20, 20, 20, 1) 30%,
+    rgba(0, 0, 0, 0)
+  );
   position: absolute;
   padding: 0 3.1vw;
   top: 43.7vw;
+  left: 0;
+  margin-bottom: 10vw;
 }
 
 .movie-content {
@@ -400,7 +487,7 @@ export default {
 .movieposter {
   width: 15.5vw;
   height: 8.5vw;
-object-fit: cover;
+  object-fit: cover;
   border-radius: 5px;
 }
 
@@ -415,7 +502,7 @@ object-fit: cover;
 .movieposter-more {
   width: inherit;
   height: 535px;
-    object-fit: fill;
+  object-fit: fill;
 }
 
 .movie-group:hover {
@@ -482,7 +569,7 @@ object-fit: cover;
 }
 
 .menu-more-detail-full > div {
-    font-size: 16px;
+  font-size: 16px;
   margin-left: 0.6vw;
   z-index: 1;
 }
@@ -496,9 +583,9 @@ object-fit: cover;
 }
 
 .content-more-contentRating {
-    width: fit-content;
+  width: fit-content;
   border: 1px solid gray;
-  padding: 0 0.5vw 0 .8vw;
+  padding: 0 0.5vw 0 0.8vw;
 }
 
 .menu-more-detail-inline {
@@ -512,8 +599,8 @@ object-fit: cover;
 }
 
 .content-more-genres {
-    padding: .2vw .5vw;
-    text-align: left;
+  padding: 0.2vw 0.5vw;
+  text-align: left;
   font-size: 0.55vw;
 }
 
@@ -562,63 +649,62 @@ object-fit: cover;
   padding: 2vw 1vw;
 }
 
-.more-like-col{
-    padding: .5vw;
-    display: inline-block;
+.more-like-col {
+  padding: 0.5vw;
+  display: inline-block;
 }
 
-.more-like-this-box{
-    border-radius: 5px;
-    background-color: #2f2f2f;
-    margin: 1vw 0;
+.more-like-this-box {
+  border-radius: 5px;
+  background-color: #2f2f2f;
+  margin: 1vw 0;
 }
 
-.more-like-this-content{
-    padding: 1.5vw 1vw;
+.more-like-this-content {
+  padding: 1.5vw 1vw;
 }
 
 .more-like-this-img {
-    border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0;
   width: 100%;
   height: 150px;
   object-fit: none;
   object-position: 50% 10%;
 }
 
-.content-more-contentRating-year{
-    display: flex;
-    align-items: center;
+.content-more-contentRating-year {
+  display: flex;
+  align-items: center;
 }
 
-.content-more-contentRating-year span{
-    margin-right: 1vw;
+.content-more-contentRating-year span {
+  margin-right: 1vw;
 }
 
-.content-more-story{
-    color: #d2d2d2;
-    font-size: 14px;
-    line-height: 20px;
+.content-more-story {
+  color: #d2d2d2;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.about-movie{
-    padding: 1.5vw .5vw;
+.about-movie {
+  padding: 1.5vw 0.5vw;
 }
 
-.about-movie-main-text{
-    font-size: 24px;
+.about-movie-main-text {
+  font-size: 24px;
 }
 
-.about-movie-sec-text-head{
-    font-weight: 100;
-    line-height: 20px;
-    display: block;
-    color: #777;
-    font-size: 14px;
-    margin-top: .7vw;
+.about-movie-sec-text-head {
+  font-weight: 100;
+  line-height: 20px;
+  display: block;
+  color: #777;
+  font-size: 14px;
+  margin-top: 0.7vw;
 }
-.about-movie-sec-text{
-    color: #fff;
-    font-size: 14px;
+.about-movie-sec-text {
+  color: #fff;
+  font-size: 14px;
 }
-
 </style>

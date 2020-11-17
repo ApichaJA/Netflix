@@ -130,8 +130,6 @@ export default {
 <style scoped>
 .main-browse {
     z-index: 1;
-    position: absolute;
-    top: -7%;
 }
 
 .poster {
@@ -238,8 +236,7 @@ export default {
 }
 
 .top-main-motion {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, .7) 10%, rgba(0, 0, 0, 0));
-    width: 100vw;
+    width: 100%;
     height: calc(100vw/1.77);
 }
 </style>

@@ -96,7 +96,7 @@ export default {
 <style scoped>
 nav {
   padding: 1.1vh 3vw;
-  z-index: 2;
+  z-index: 1;
   width: 100%;
   position: fixed;
   background-color: transparent;
