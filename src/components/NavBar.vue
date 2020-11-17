@@ -2,6 +2,7 @@
   <nav class="navbar navbar-expand-sm">
     <img src="@/assets/netflix-logo.png" width="98px" />
     <ul class="navbar-nav ml-4">
+
       <li class="nav-item">
         <router-link
           class="nav-link"
@@ -11,6 +12,7 @@
           Home
         </router-link>
       </li>
+
       <li class="nav-item">
         <router-link
           class="nav-link"
@@ -20,6 +22,7 @@
           TV Shows
         </router-link>
       </li>
+
             <li class="nav-item">
         <router-link
           class="nav-link"
@@ -29,6 +32,7 @@
           Movies
         </router-link>
       </li>
+
             <li class="nav-item">
         <router-link
           class="nav-link"
@@ -38,6 +42,7 @@
           Latest
         </router-link>
       </li>
+
             <li class="nav-item">
         <router-link
           class="nav-link"
@@ -47,6 +52,35 @@
           My List
         </router-link>
       </li>
+      
+      
+      <div class="nav-right">
+      
+      <div>
+            <button class="btn">
+        <i class=" fas fa-search nav-icon"></i>
+      </button>
+      </div>
+      
+      <div>
+            <button class="btn">
+        <i class="fas fa-gift nav-icon"></i>
+      </button>
+      </div>
+      
+      <div>
+            <button class="btn">
+        <i class="fas fa-bell nav-icon"></i>
+      </button>
+      </div>
+      
+      <div>
+            <button class="btn">
+        <i class="fas fa-user-circle btn-account"></i>
+        <i class="fas fa-caret-down btn-caret-account"></i>
+      </button>
+      </div>
+      </div>
     </ul>
   </nav>
 </template>
@@ -84,5 +118,31 @@ nav {
 .nav-link-active {
   color: #fff !important;
   font-weight: 700;
+  align-items: center;
+}
+
+.nav-icon {
+  color: #e5e5e5 !important;
+  font-size: 1.6vw;
+}
+
+.btn-account{
+  color:#e5e5e5 !important;
+  font-size:25px; 
+  margin-right:5px;
+}
+
+.btn-caret-account{
+  color:#e5e5e5 !important;
+}
+
+.nav-right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  flex-grow: 1;
+  right: 4%;
+  height: 100%;
 }
 </style>
