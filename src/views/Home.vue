@@ -12,7 +12,7 @@
             ></span>
           </div>
         </div>
-        <div class="my-list-cal" v-if="moreInfo">
+        <div class="my-list-cal">
           <div
             v-for="movieLists in movieList"
             :key="movieLists.title"
@@ -26,21 +26,38 @@
               />
               <div class="movieinfo">
                   <div class="info-menu-group">
+                      <div class="posi-icon">
+                          <div class="icon-left">
                       <button class="btn icon-menu">
-                      <i class="fas fa-play-circle info-menu-group-icon"></i>
+                      <i class="fas iconscale fa-play-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
                       <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas fa-thumbs-up"></i>
+                          <i class="fas iconscale fa-thumbs-up"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas fa-thumbs-down"></i>
+                          <i class="fas iconscale fa-thumbs-down"></i>
                       </button>
+                          </div>
+                          <div class="icon-right">
                       <button class="btn icon-menu">
-                          <i class="fas fa-chevron-circle-down"></i>
+                          <i class="fas iconscale fa-chevron-circle-down"></i>
                       </button>
+                          </div>
+                      </div>
+                          <div class="menu-more-detail">
+                              <div class="content-more-match">{{movieLists.contentRating}}% Match</div>
+                              <div class="content-more-duration">{{durationTime(movieLists.duration)}}</div>
+                              <div class="content-more-contentRating">{{movieLists.contentRating}}+</div>
+                              <div class="content-more-year">{{movieLists.year}}</div>
+                          </div>
+                          <div class="detail-genres">
+                          <div class="menu-more-detail-inline" v-for="genres in movieLists.genres" :key="genres">
+                              <div class="content-more-genres">{{genres}}<span> &bull;</span> </div>
+                          </div>
+                          </div>
                   </div>
               </div>
             </div>
@@ -81,24 +98,24 @@ export default {
   data() {
     return {
       movieList: [],
-      moreInfo: true,
+      moreInfo: false,
       count: 0,
     };
   },
 
-  computed: {},
+  computed: {
+      },
 
   methods: {
-    showmore: () => {
-      if (this.moreInfo === true) {
-        this.moreInfo = false;
-        console.log(this.moreInfo);
-      } else this.moreInfo = false;
-      console.log(this.moreInfo);
-    },
-  },
+      durationTime(duaration){
+          var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(10)
+          var min = (duaration.replace("PT", "").replace("M", "") % 60).toString(10)
+          var time = hr+"h "+min+"m"
+          return time
+      },
+      },
 
-  beforeMount() {
+  created() {
     data.forEach((element) => {
       if (this.movieList.length <= 5) {
         this.movieList.push(element);
@@ -113,11 +130,11 @@ export default {
     var fastChange = 0;
     onOver.addEventListener("mouseover", function (event) {
         //WanaFix??
-        event.target.nextSibling.addEventListener("click", function () {
-        })
         isHover = event.target.nextSibling;
         if(fastChange === 1){
-            pastHover.classList.remove("showinfo")
+            if(pastHover !== isHover){
+                pastHover.classList.remove("showinfo")
+            }
             event.target.nextSibling.classList.add("showinfo");
             pastHover = isHover;
         }
@@ -256,25 +273,73 @@ export default {
 }
 
 .movieinfo {
-  display: block;
+  display: none;
   color: #fff;
   padding: 1vw;
 }
+
+.movieinfo:hover {
+  display: block;
+}
+
 .showinfo {
-  display: block !important;
+  display: block;
 }
 
 .icon-menu{
-    width: fit-content;
     color: white;
-    transform: scale(2);
-    margin-right: .5vw;
+    width: 2.3vw;
+    font-size: 1.5vw;
 }
 
-.info-menu-group-icon{
-}
 
-.info-menu-group{
+.icon-left{
     display: flex;
+    width: 12vw;
+}
+
+.btn{
+    margin: 0;
+    padding: 0 0 0 0;
+}
+
+.posi-icon{
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-more-detail{
+    display: flex;
+    margin-left: .5vw;
+    text-align: left;
+    font-size: .55vw;
+    padding: .1vw 0 0 0;
+}
+
+.menu-more-detail > div{
+    margin-right: .3vw;
+}
+
+.content-more-match{
+    color: #46d369;
+}
+
+.content-more-contentRating{
+    border: 1px solid gray;
+    padding: 0 .4vw;
+}
+
+.menu-more-detail-inline{
+    display: inline-block;
+    font-size: .55vw;
+}
+
+.detail-genres{
+    text-align: left;
+    padding: 0 .4vw;
+}
+
+.content-more-genres span{
+    font-size: 1vw;
 }
 </style>
