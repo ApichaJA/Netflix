@@ -1,8 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-sm">
     <img src="@/assets/netflix-logo.png" width="98px" />
+    <div class="navbar-container">
+    <div class="nav-left">
     <ul class="navbar-nav ml-4">
-
       <li class="nav-item">
         <router-link
           class="nav-link"
@@ -52,30 +53,36 @@
           My List
         </router-link>
       </li>
-      
-      
+      </ul>
+      </div>
+
       <div class="nav-right">
         <div class="search-box">
-          <button class="btn-box">
-            <i class=" fas fa-search btn-search"></i>
+          <button v-if="!showSearch" class="btn" v-on:click="searchInput()">
+            <i class="fas fa-search btn-search"></i>
           </button>
-          <input class="input-search-box" type="text" placeholder="Title,people,genres">
         </div>
+          <div class="input-search-group">
+            <button class="btn search-btn-hide" :class="{'search-btn-show':showSearch}">
+            <i class="fas fa-search btn-search"></i>
+          </button>
+          <input @autofocus="showSearch" :class="{'input-search-box': showSearch}" class="input-search-box-hide" type="text" placeholder="Title, people, genres">
+          </div>
       
         <div class="gift-box">
-          <button class="btn-box">
+          <button class="btn">
             <i class="fas fa-gift btn-gift"></i>
           </button>
         </div>
       
         <div class="noti-box">
-          <button class="btn-box">
+          <button class="btn">
             <i class="fas fa-bell btn-noti"></i>
           </button>
         </div>
       
         <div class="acc-box">
-          <button class="btn-box">
+          <button class="btn">
             <i class="fas fa-user-circle btn-account"></i>
             <i class="fas fa-caret-down btn-caret-account"></i>
           </button>
@@ -83,12 +90,25 @@
 
       </div>
 
-    </ul>
+    </div>
   </nav>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      showSearch : false,
+    }
+  },
+
+  methods: {
+    searchInput(){
+      this.showSearch = true
+      document.querySelector(".input-search-box-hide").autofocus;
+    }
+  },
+
   mounted() {
     console.log(this.$route);
   },
@@ -103,6 +123,12 @@ nav {
   position: fixed;
   background-color: transparent;
   background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+}
+
+.navbar-container{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .nav-item{
@@ -123,40 +149,33 @@ nav {
   align-items: center;
 }
 
+
 .nav-right{
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  position: absolute;
-  flex-grow: 1;
-  right: 4%;
-  height: 100%;
 }
 
 .btn-search{
   color: #fff;
-  font-size: 1.3vw;
   margin: 7px;
   padding: 0px;
 }
 
 .btn-gift{
   color:#fff;
-  font-size: 1.6vw;
-  margin-right: 1em;
 }
 
 .btn-noti{
   color: #fff;
-  font-size: 1.6vw;
-  margin-right: 1em;
 }
 
 .btn-account{
   color:#fff;
-  font-size:25px;
-  margin-right: 0.5em;
+  font-size: 1.5vw;
+  margin-right: 1vw;
 }
+
+
 
 .btn-caret-account{
   position: relative;
@@ -165,55 +184,42 @@ nav {
   font-size: 11px;
 }
 
-.btn-box{
+.btn-box, .btn{
   background-color: transparent;
-  text-align: center;
-
+  padding: 0;
+  font-size: 1vw;
+  margin-left: 1.2vw;
 }
 
-div.search-box{
+.input-search-box-hide{
+  width: 0;
+  opacity: 0;
+}
+
+.search-btn-hide{
+  display: none;
+}
+.input-search-group{
   position: relative;
 }
-
-.search-box{
-  padding: 2px;
-  border: 1px solid #e5e5e5;
-  background-color: #000;
-  margin: 1em;
+.search-btn-show{
+  display: block;
+  position: absolute;
+  left: 0;
+  opacity: 1;
+  margin: 0;
 }
-
-.gift-box{
-  position: relative;
-  text-align: center;
-  margin: 10px;
-}
-
-.noti-box{
-  position: relative;
-  text-align: center;
-  margin: 10px;
-}
-
 
 .input-search-box{
-  /* display: none; */
-  text-align: left;
-  margin: auto;
-  width: 200px;
-  height: 30px;
+  width: 14vw;
+  padding: .3vw 2vw;
   background-color: #000;
+  border: 1px solid #fff;
   color:#fff;
-  font-size: 12px;
-}
-
-.input-search-box:focus, button:focus{
+  font-size: .8vw;
   outline: none;
-}
-
-button, input{
-  border: none;
-  margin: 0px;
-  padding: 0px;
+  opacity: 1;
+  transition:width .3s;
 }
 
 </style>
