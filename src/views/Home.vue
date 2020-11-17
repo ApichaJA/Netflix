@@ -214,6 +214,9 @@ export default {
         event.target.nextSibling.classList.add("showinfo");
         fastChange = 1;
       }
+      else{
+          document.querySelector(".top-main-motion").pause();
+      }
     });
     onOver.addEventListener("mouseleave", function () {
       setTimeout(() => {
