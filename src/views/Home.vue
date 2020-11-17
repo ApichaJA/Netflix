@@ -18,48 +18,112 @@
             :key="movieLists.title"
             class="video-content-box"
           >
-            <div class="movie-group">
+            <div
+              :class="{
+                'show-more-detail': moreInfo === movieLists.title,
+                'movie-group': moreInfo === '',
+              }"
+            >
+            <button class="btn close-popup" v-on:click="showmoredetailVideo('')" v-if="moreInfo === movieLists.title">
+                <i class="far fa-times-circle"></i>
+            </button>
               <img
-               
-                class="movieposter"
+                :class="{'movieposter-more': moreInfo === movieLists.title, 'movieposter' : moreInfo !== movieLists.title}"
                 :src="require('@/assets/movieJson/img/' + movieLists.poster)"
               />
               <div class="movieinfo">
-                  <div class="info-menu-group">
-                      <div class="posi-icon">
-                          <div class="icon-left">
+                <div class="info-menu-group">
+                  <div class="posi-icon">
+                    <div class="icon-left">
                       <button class="btn icon-menu">
-                      <i class="fas iconscale fa-play-circle info-menu-group-icon"></i>
+                        <i
+                          class="fas iconscale fa-play-circle info-menu-group-icon"
+                        ></i>
                       </button>
                       <button class="btn icon-menu">
-                      <i class="far fa-check-circle info-menu-group-icon"></i>
+                        <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas iconscale fa-thumbs-up"></i>
+                        <i class="fas iconscale fa-thumbs-up"></i>
                       </button>
                       <button class="btn icon-menu">
-                          <i class="fas iconscale fa-thumbs-down"></i>
+                        <i class="fas iconscale fa-thumbs-down"></i>
                       </button>
-                          </div>
-                          <div class="icon-right">
+                    </div>
+                    <div
+                      class="icon-right"
+                      v-on:click="showmoredetailVideo(movieLists.title)"
+                    >
                       <button class="btn icon-menu">
-                          <i class="fas iconscale fa-chevron-circle-down"></i>
+                        <i class="fas iconscale fa-chevron-circle-down"></i>
                       </button>
-                          </div>
-                      </div>
-                          <div class="menu-more-detail">
-                              <div class="content-more-match">{{movieLists.contentRating}}% Match</div>
-                              <div class="content-more-duration">{{durationTime(movieLists.duration)}}</div>
-                              <div class="content-more-contentRating">{{movieLists.contentRating}}+</div>
-                              <div class="content-more-year">{{movieLists.year}}</div>
-                          </div>
-                          <div class="detail-genres">
-                          <div class="menu-more-detail-inline" v-for="genres in movieLists.genres" :key="genres">
-                              <div class="content-more-genres">{{genres}}<span> &bull;</span> </div>
-                          </div>
-                          </div>
+                    </div>
                   </div>
+                  <div class="menu-more-detail">
+                    <div class="content-more-match">
+                      {{ movieLists.contentRating }}% Match
+                    </div>
+                    <div class="content-more-duration">
+                      {{ durationTime(movieLists.duration) }}
+                    </div>
+                    <div class="content-more-contentRating">
+                      {{ movieLists.contentRating }}+
+                    </div>
+                    <div class="content-more-year">{{ movieLists.year }}</div>
+                  </div>
+                  <div class="detail-genres">
+                    <div
+                      class="menu-more-detail-inline"
+                      v-for="genres in movieLists.genres"
+                      :key="genres"
+                    >
+                      <div class="content-more-genres">
+                        {{ genres }}<span> &bull;</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+            <div class="more-detail-content" v-if="moreInfo === movieLists.title">
+              <div class="shadow-movie" v-if="moreInfo === movieLists.title"></div>
+                <div class="menu-more-detail-full">
+                    <div class="content-more-match">
+                      {{ movieLists.contentRating }}% Match
+                    </div>
+                    <div class="content-more-duration">
+                      {{ durationTime(movieLists.duration) }}
+                    </div>
+                    <div class="content-more-contentRating">
+                      {{ movieLists.contentRating }}+
+                    </div>
+                    <div class="content-more-year">{{ movieLists.year }}</div>
+                  </div>
+                  <div class="row p-2">
+                      <div class="col-8 mt-4">
+                          {{movieLists.storyline}}
+                      </div>
+                      <div class="col-4">
+                          <span style="color:#777;">Cast: </span> 
+                        <div
+                      class="menu-more-detail-inline" style="font-size: 14px;"
+                      v-for="actors in movieLists.actors"
+                      :key="actors"
+                    >
+                        {{ actors }}<span>,</span>
+                    </div>
+                    <div style="display: block" class="mt-3"></div>
+                    <span style="color:#777;">Genres: </span> 
+                      <div
+                      class="menu-more-detail-inline" style="font-size: 14px;"
+                      v-for="genres in movieLists.genres"
+                      :key="genres"
+                    >
+                         {{ genres }} <span>,</span>
+                    </div>
+                      </div>
+                  </div>
+            </div>
+
             </div>
           </div>
         </div>
@@ -98,22 +162,29 @@ export default {
   data() {
     return {
       movieList: [],
-      moreInfo: false,
+      moreInfo: "",
       count: 0,
     };
   },
 
-  computed: {
-      },
+  computed: {},
 
   methods: {
-      durationTime(duaration){
-          var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(10)
-          var min = (duaration.replace("PT", "").replace("M", "") % 60).toString(10)
-          var time = hr+"h "+min+"m"
-          return time
-      },
-      },
+    durationTime(duaration) {
+      var hr = (~~(duaration.replace("PT", "").replace("M", "") / 60)).toString(
+        10
+      );
+      var min = (duaration.replace("PT", "").replace("M", "") % 60).toString(
+        10
+      );
+      var time = hr + "h " + min + "m";
+      return time;
+    },
+
+    showmoredetailVideo(more) {
+      this.moreInfo = more;
+    },
+  },
 
   created() {
     data.forEach((element) => {
@@ -129,31 +200,30 @@ export default {
     var pastHover = "";
     var fastChange = 0;
     onOver.addEventListener("mouseover", function (event) {
-        //WanaFix??
-        isHover = event.target.nextSibling;
-        if(fastChange === 1){
-            if(pastHover !== isHover){
-                pastHover.classList.remove("showinfo")
-            }
-            event.target.nextSibling.classList.add("showinfo");
-            pastHover = isHover;
+      //WanaFix??
+      isHover = event.target.nextSibling;
+      if (fastChange === 1 && !event.target.classList.contains('movieposter-more')) {
+        if (pastHover !== isHover) {
+          pastHover.classList.remove("showinfo");
         }
-        else{
-            pastHover = isHover;
-            document.querySelector(".top-main-motion").pause();
-            event.target.nextSibling.classList.add("showinfo");
-        fastChange = 1
-        }
+        event.target.nextSibling.classList.add("showinfo");
+        pastHover = isHover;
+      } else if(!event.target.classList.contains('movieposter-more')) {
+        pastHover = isHover;
+        document.querySelector(".top-main-motion").pause();
+        event.target.nextSibling.classList.add("showinfo");
+        fastChange = 1;
+      }
     });
     onOver.addEventListener("mouseleave", function () {
-        setTimeout(() => {
-            document.querySelector(".poster").classList.add("outposter");
+      setTimeout(() => {
+        document.querySelector(".poster").classList.add("outposter");
         if (document.querySelector(".top-main-motion") != "ended") {
-            document.querySelector(".top-main-motion").play();
+          document.querySelector(".top-main-motion").play();
         }
       }, 2000);
       document.querySelector(".poster").classList.remove("outposter");
-      isHover.classList.remove("showinfo")
+      isHover.classList.remove("showinfo");
       pastHover = isHover;
       fastChange = 0;
     });
@@ -251,11 +321,17 @@ export default {
 }
 
 .movie-group {
+transform: translateX(0) translateY(0);
   background-color: #222;
   width: 15.5vw;
   border-radius: 5px;
   transition: 0.3s;
-  transform: scale(1);
+}
+
+.movieposter-more {
+  width: inherit;
+  height: 535px;
+  object-fit: cover;
 }
 
 .movie-group:hover {
@@ -276,6 +352,7 @@ export default {
   display: none;
   color: #fff;
   padding: 1vw;
+  background-color: #222;
 }
 
 .movieinfo:hover {
@@ -286,60 +363,104 @@ export default {
   display: block;
 }
 
-.icon-menu{
-    color: white;
-    width: 2.3vw;
-    font-size: 1.5vw;
+.icon-menu {
+  color: white;
+  width: 2.3vw;
+  font-size: 1.5vw;
 }
 
+.icon-left {
+  display: flex;
+  width: 12vw;
+}
 
-.icon-left{
+.btn {
+  margin: 0;
+  padding: 0 0 0 0;
+}
+
+.posi-icon {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-more-detail {
+  display: flex;
+  margin-left: 0.5vw;
+  text-align: left;
+  font-size: 0.55vw;
+  padding: 0.1vw 0 0 0;
+}
+
+.menu-more-detail-full{
     display: flex;
-    width: 12vw;
+    z-index: 5;
 }
 
-.btn{
-    margin: 0;
-    padding: 0 0 0 0;
+.menu-more-detail-full > div{
+    font-size: .95vw;
+    margin-left: 0.6vw;
+    z-index: 1;
 }
 
-.posi-icon{
-    display: flex;
-    justify-content: space-between;
+.menu-more-detail > div {
+  margin-right: 0.3vw;
 }
 
-.menu-more-detail{
-    display: flex;
-    margin-left: .5vw;
+.content-more-match {
+  color: #46d369;
+}
+
+.content-more-contentRating {
+  border: 1px solid gray;
+  padding: 0 0.4vw;
+}
+
+.menu-more-detail-inline {
+  display: inline-block;
+  font-size: 0.55vw;
+}
+
+.detail-genres {
+  text-align: left;
+  padding: 0 0.4vw;
+}
+
+.content-more-genres span {
+  font-size: 1vw;
+}
+
+.show-more-detail {
+    border-radius: 5px;
+    transition: 0.5s;
+    width: 950.6px;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(-40vw - 4.5em));
+    box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
+    background-color: #181818;
+    position: fixed;
+}
+
+.close-popup{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 2vw;
+    z-index: 1;
+}
+
+.more-detail-content{
+    padding: 1vw 2vw;
+    color: #fff;
     text-align: left;
-    font-size: .55vw;
-    padding: .1vw 0 0 0;
 }
-
-.menu-more-detail > div{
-    margin-right: .3vw;
-}
-
-.content-more-match{
-    color: #46d369;
-}
-
-.content-more-contentRating{
-    border: 1px solid gray;
-    padding: 0 .4vw;
-}
-
-.menu-more-detail-inline{
-    display: inline-block;
-    font-size: .55vw;
-}
-
-.detail-genres{
-    text-align: left;
-    padding: 0 .4vw;
-}
-
-.content-more-genres span{
-    font-size: 1vw;
+.shadow-movie{
+    position: absolute;
+    top: -10vw;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top,#181818,transparent 50%);
 }
 </style>

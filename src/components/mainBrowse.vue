@@ -56,12 +56,6 @@ export default {
         this.detectFocusOut();
     },
 
-    watch: {
-        tabFocus(value) {
-            console.log("New value:", value);
-        },
-    },
-
     methods: {
         volumeSelect: function (event) {
             this.videoEvent = event;
