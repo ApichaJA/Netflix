@@ -472,10 +472,10 @@ export default {
 
 <style scoped>
 .main-home {
-  z-index: 2;
+  z-index: 5;
   background-image: linear-gradient(
     to top,
-    rgba(20, 20, 20, 1) 30%,
+    rgba(20, 20, 20, 1) 93%,
     rgba(0, 0, 0, 0)
   );
   position: absolute;
