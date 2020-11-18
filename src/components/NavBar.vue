@@ -117,6 +117,8 @@ export default {
 
 <style scoped>
 nav {
+    font-family: HelveticaNeue,sans-serif;
+
   padding: 1.1vh 3vw;
   z-index: 1;
   width: 100%;
@@ -148,8 +150,6 @@ nav {
   font-weight: 700;
   align-items: center;
 }
-
-
 .nav-right{
   display: flex;
   align-items: center;

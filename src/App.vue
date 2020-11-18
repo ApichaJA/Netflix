@@ -22,9 +22,17 @@ export default {
 body {
     background-color: #141414;
 }
+@font-face{
+  font-family: HelveticaNeueBd;
+  src: url(../src/font/HelveticaNeueBd.ttf);
+
+  font-family: HelveticaNeue;
+  src: url(../src/font/HelveticaNeue.ttf);
+}
+
+
 
 #app {
-    font-family: 'Martel Sans', sans-serif;
     text-align: center;
     color: #2c3e50;
 }
