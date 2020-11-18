@@ -4,12 +4,9 @@
     <div class="main-home">
       <div
         class="movie-content"
-        v-for="(listmovies, index) in name"
-        :key="index"
       >
-          <router-link :to="{ name: 'Genres', params: {Genres:listmovies} }">
         <div class="list-name">
-          <span class="content-list">{{ listmovies }}</span>
+          <span class="content-list">{{ showGenres }}</span>
           
           <div class="explore-all">
             <span class="more-link">Explore All</span>
@@ -18,10 +15,9 @@
             ></span>
           </div>
         </div>
-          </router-link>
         <div class="my-list-col">
           <div
-            v-for="movieList in showmovie(listmovies)"
+            v-for="movieList in showmovie(showGenres)"
             :key="movieList.title"
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
@@ -227,7 +223,7 @@
 <script>
 import mainBrowse from "@/components/mainBrowse";
 import top_movie from "@/assets/movieJson/json/top-rated-movies-01.json";
-import coming_soon from "@/assets/movieJson/json/movies-coming-soon.json";
+
 //import store from "@/store"
 
 export default {
@@ -239,6 +235,7 @@ export default {
 
   data() {
     return {
+    showGenres: this.$route.params.Genres,
       movieStock: {
         Action: [],
         Crime: [],
@@ -311,30 +308,10 @@ export default {
       var genMovie = [];
       top_movie.forEach((element) => {
         console.log();
-        if (
-          (toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
-            element.genres[
-              ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-            ] ||
-            toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
-              element.genres[
-                ~~(
-                  (Math.floor(Math.random() * 100) / 10) %
-                  element.genres.length
-                )
-              ] ||
-            toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
-              element.genres[
-                ~~(
-                  (Math.floor(Math.random() * 100) / 10) %
-                  element.genres.length
-                )
-              ]) &&
-          genMovie.length < 9 &&
+        if (toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] === element.genres[~~((Math.floor(Math.random() * 100) / 10) %element.genres.length)] && genMovie.length < 9){
           this.moreLikevideoInlist.indexOf(element.title) !== -1
-        ) {
-          genMovie.push(element);
         }
+          genMovie.push(element);
       });
       return genMovie;
     },
@@ -384,128 +361,16 @@ export default {
   },
 
   created() {
-    coming_soon.forEach((element) => {
-      if (
-        element.id > ~~(Math.floor(Math.random() * 1000) / 10) &&
-        this.movieStock["ComingSoon"].length <= 5
-      ) {
-        if (this.movieInlist.indexOf(element.title) === -1) {
-          this.movieStock["ComingSoon"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-    });
     top_movie.forEach((element) => {
-      if (this.movieStock["Action"].length <= 5) {
+      if (this.movieStock[this.showGenres].length <= 500) {
         if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Action" &&
-          this.movieInlist.indexOf(element.title) === -1
+          element.genres.indexOf(this.showGenres) > -1
         ) {
-          this.movieStock["Action"].push(element);
+          this.movieStock[this.showGenres].push(element);
           this.movieInlist.push(element.title);
         }
       }
-      if (this.movieStock["Crime"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Crime" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Crime"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Drama"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Drama" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Drama"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Biography"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Biography" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Biography"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["History"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "History" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["History"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Adventure"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Adventure" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Adventure"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Fantasy"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Fantasy" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Fantasy"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Comedy"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Comedy" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Comedy"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Romance"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Romance" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Romance"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["SciFi"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Sci-Fi" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["SciFi"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      } else {
+       else {
         this.moreLikevideoInlist.push(element.title);
       }
     });
@@ -583,19 +448,21 @@ export default {
 }
 
 .my-list-col {
-  display: flex;
+  display: inline-block;
+    text-align: left;
 }
 
 .video-content-box {
-  margin: 0.1vw;
+  margin: 1vw 1px 2vw 1px;
   width: 15.5vw;
   height: 8.5vw;
   background-color: #222;
   border-radius: 5px;
+  display: inline-flex;
 }
 
 .video-content-box:hover {
-  z-index: 3;
+  z-index: 1;
 }
 
 .movieposter {
@@ -620,6 +487,7 @@ export default {
 }
 
 .movie-group-wait:hover {
+     z-index: 5;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.7) 10%,
