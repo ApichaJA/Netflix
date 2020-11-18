@@ -1,7 +1,7 @@
 <template>
   <div>
     <mainBrowse />
-    <div class="main-home" v-on:click="halo()">
+    <div class="main-home">
       <div
         class="movie-content"
         v-for="(listmovies, index) in name"
@@ -21,18 +21,22 @@
             v-for="movieList in showmovie(listmovies)"
             :key="movieList.title"
             class="video-content-box"
-            @mouseover="onMouseOver = movieList.title"
+            @mouseover="smoothHover(movieList.title)"
             @mouseleave="onMouseOver = ''"
           >
             <div
               :class="{
                 'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
+                'movie-group-wait': smoothHoverStatus && moreInfo === '',
               }"
             >
               <button
                 class="btn close-popup"
-                v-on:click="showmoredetailVideo(''), onMouseOver = ''"
+                v-on:click="showmoredetailVideo(''),
+                onMouseOver = ''
+                onPopup = false
+                "
                 v-if="moreInfo === movieList.title"
               >
                 <i class="far fa-times-circle"></i>
@@ -46,7 +50,9 @@
               />
               <div
                 class="movieinfo"
-                :class="{ 'showinfo': onMouseOver === movieList.title && moreInfo === ''}"
+                :class="{
+                  showinfo: onMouseOver === movieList.title && moreInfo === '',
+                }"
               >
                 <div class="info-menu-group">
                   <div class="posi-icon">
@@ -68,7 +74,11 @@
                     </div>
                     <div
                       class="icon-right"
-                      v-on:click="showmoredetailVideo(movieList.title), moreInfo = movieList.title"
+                      v-on:click="
+                        showmoredetailVideo(movieList.title),
+                          (moreInfo = movieList.title),
+                          onPopup = true
+                      "
                     >
                       <button class="btn icon-menu">
                         <i class="fas iconscale fa-chevron-circle-down"></i>
@@ -88,7 +98,7 @@
                     <div class="content-more-year">{{ movieList.year }}</div>
                   </div>
                   <div class="content-more-genres">
-                    {{ genres(movieList.genres) }} •
+                    {{ genres(movieList.genres) }}
                   </div>
                 </div>
               </div>
@@ -125,7 +135,7 @@
 
                     <div class="menu-more-detail-inline">
                       <span style="color: #777">Genres: </span
-                      >{{ genres(movieList.genres) }} •
+                      >{{ genres(movieList.genres) }}
                     </div>
                   </div>
                 </div>
@@ -184,7 +194,7 @@
                         <span class="about-movie-sec-text-head"
                           >Genres:
                           <span class="about-movie-sec-text"
-                            >{{ genres(movieList.genres) }} •
+                            >{{ genres(movieList.genres) }}
                           </span></span
                         >
                         <span class="about-movie-sec-text-head"
@@ -214,6 +224,7 @@
 <script>
 import mainBrowse from "@/components/mainBrowse";
 import top_movie from "@/assets/movieJson/json/top-rated-movies-01.json";
+import coming_soon from "@/assets/movieJson/json/movies-coming-soon.json";
 
 export default {
   components: {
@@ -232,6 +243,7 @@ export default {
         Comedy: [],
         Romance: [],
         SciFi: [],
+        ComingSoon: [],
       },
 
       name: [
@@ -245,18 +257,37 @@ export default {
         "Comedy",
         "Romance",
         "SciFi",
+        "ComingSoon",
       ],
       movieInlist: [],
       moreLikevideoInlist: [],
       moreInfo: "",
       count: 0,
-      onMouseOver: '',
+      onMouseOver: "",
+      smoothHoverStatus: false,
+      onPopup: false,
     };
   },
 
   computed: {},
 
   methods: {
+    smoothHover(title) {
+      var data = this.onMouseOver;
+        if(this.onPopup === false){
+      setTimeout(() => {
+          (this.smoothHoverStatus = true), (this.onMouseOver = title);
+      }, 500);
+        }
+
+      if (title !== data) {
+        this.smoothHoverStatus = false;
+      }
+    },
+    smoothHoveroff() {
+      this.smoothHoverStatus = false;
+      this.onMouseOver = "";
+    },
 
     showmovie(orderMovie) {
       return this.movieStock[orderMovie];
@@ -310,6 +341,7 @@ export default {
     },
 
     showmoredetailVideo(more) {
+        this.smoothHoverStatus = false;
       this.moreInfo = more;
     },
 
@@ -335,13 +367,24 @@ export default {
     genres(genre) {
       var gen = "";
       genre.forEach((element) => {
-        gen += element + " ";
+        gen += element + " • ";
       });
       return gen;
     },
   },
 
   created() {
+    coming_soon.forEach((element) => {
+      if (
+        element.id > ~~(Math.floor(Math.random() * 1000) / 10) &&
+        this.movieStock["ComingSoon"].length <= 5
+      ) {
+        if (this.movieInlist.indexOf(element.title) === -1) {
+          this.movieStock["ComingSoon"].push(element);
+          this.movieInlist.push(element.title);
+        }
+      }
+    });
     top_movie.forEach((element) => {
       if (this.movieStock["Action"].length <= 5) {
         if (
@@ -458,14 +501,11 @@ export default {
     });
   },
 
-  mounted() {
-
-  },
+  mounted() {},
 };
 </script>
 
 <style scoped>
-
 .main-home {
   z-index: 5;
   background-image: linear-gradient(
@@ -481,7 +521,7 @@ export default {
 }
 
 .movie-content {
-  margin-bottom: 2vw;
+  margin-bottom: 3vw;
 }
 
 .list-name {
@@ -568,7 +608,7 @@ export default {
   object-fit: fill;
 }
 
-.movie-group:hover {
+.movie-group-wait:hover {
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.7) 10%,
@@ -698,7 +738,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-    background-image: linear-gradient(
+  background-image: linear-gradient(
     to top,
     rgba(0, 0, 0, 1) 1%,
     rgba(24, 24, 24, 0)
