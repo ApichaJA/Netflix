@@ -1,7 +1,7 @@
 <template>
   <div>
     <mainBrowse />
-    <div class="main-home">
+    <div class="main-home" v-on:click="halo()">
       <div
         class="movie-content"
         v-for="(listmovies, index) in name"
@@ -16,11 +16,13 @@
             ></span>
           </div>
         </div>
-        <div class="my-list-cal">
+        <div class="my-list-col">
           <div
             v-for="movieList in showmovie(listmovies)"
             :key="movieList.title"
             class="video-content-box"
+            @mouseover="onMouseOver = movieList.title"
+            @mouseleave="onMouseOver = ''"
           >
             <div
               :class="{
@@ -30,7 +32,7 @@
             >
               <button
                 class="btn close-popup"
-                v-on:click="showmoredetailVideo('')"
+                v-on:click="showmoredetailVideo(''), onMouseOver = ''"
                 v-if="moreInfo === movieList.title"
               >
                 <i class="far fa-times-circle"></i>
@@ -42,7 +44,10 @@
                 }"
                 :src="require('@/assets/movieJson/img/' + movieList.poster)"
               />
-              <div class="movieinfo">
+              <div
+                class="movieinfo"
+                :class="{ 'showinfo': onMouseOver === movieList.title && moreInfo === ''}"
+              >
                 <div class="info-menu-group">
                   <div class="posi-icon">
                     <div class="icon-left">
@@ -63,7 +68,7 @@
                     </div>
                     <div
                       class="icon-right"
-                      v-on:click="showmoredetailVideo(movieList.title)"
+                      v-on:click="showmoredetailVideo(movieList.title), moreInfo = movieList.title"
                     >
                       <button class="btn icon-menu">
                         <i class="fas iconscale fa-chevron-circle-down"></i>
@@ -245,12 +250,14 @@ export default {
       moreLikevideoInlist: [],
       moreInfo: "",
       count: 0,
+      onMouseOver: '',
     };
   },
 
   computed: {},
 
   methods: {
+
     showmovie(orderMovie) {
       return this.movieStock[orderMovie];
     },
@@ -262,17 +269,25 @@ export default {
       });
       var genMovie = [];
       top_movie.forEach((element) => {
-          console.log()
+        console.log();
         if (
-          (toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
-            element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] ||
-            toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
+          (toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
+            element.genres[
+              ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+            ] ||
+            toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
               element.genres[
-                ~~(Math.floor(Math.random() * 100)/10%element.genres.length)
+                ~~(
+                  (Math.floor(Math.random() * 100) / 10) %
+                  element.genres.length
+                )
               ] ||
-            toArr[~~(Math.floor(Math.random() * 100)/10%toArr.length)] ===
+            toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
               element.genres[
-                ~~(Math.floor(Math.random() * 100)/10%element.genres.length)
+                ~~(
+                  (Math.floor(Math.random() * 100) / 10) %
+                  element.genres.length
+                )
               ]) &&
           genMovie.length < 9 &&
           this.moreLikevideoInlist.indexOf(element.title) !== -1
@@ -330,7 +345,9 @@ export default {
     top_movie.forEach((element) => {
       if (this.movieStock["actionMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Action" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Action" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["actionMovieList"].push(element);
@@ -339,7 +356,9 @@ export default {
       }
       if (this.movieStock["crimeMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Crime" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Crime" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["crimeMovieList"].push(element);
@@ -348,7 +367,9 @@ export default {
       }
       if (this.movieStock["dramaMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Drama" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Drama" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["dramaMovieList"].push(element);
@@ -357,7 +378,9 @@ export default {
       }
       if (this.movieStock["biographyMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Biography" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Biography" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["biographyMovieList"].push(element);
@@ -366,7 +389,9 @@ export default {
       }
       if (this.movieStock["historyMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "History" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "History" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["historyMovieList"].push(element);
@@ -375,7 +400,9 @@ export default {
       }
       if (this.movieStock["adventureMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Adventure" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Adventure" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["adventureMovieList"].push(element);
@@ -384,7 +411,9 @@ export default {
       }
       if (this.movieStock["fantasyMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Fantasy" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Fantasy" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["fantasyMovieList"].push(element);
@@ -393,7 +422,9 @@ export default {
       }
       if (this.movieStock["comedyMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Comedy" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Comedy" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["comedyMovieList"].push(element);
@@ -402,7 +433,9 @@ export default {
       }
       if (this.movieStock["romanceMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Romance" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Romance" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["romanceMovieList"].push(element);
@@ -411,7 +444,9 @@ export default {
       }
       if (this.movieStock["sciFiMovieList"].length <= 5) {
         if (
-          element.genres[~~(Math.floor(Math.random() * 100)/10%element.genres.length)] === "Sci-Fi" &&
+          element.genres[
+            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
+          ] === "Sci-Fi" &&
           this.movieInlist.indexOf(element.title) === -1
         ) {
           this.movieStock["sciFiMovieList"].push(element);
@@ -424,53 +459,13 @@ export default {
   },
 
   mounted() {
-    var onOver = document.querySelector(".my-list-cal");
-    var isHover = "";
-    var pastHover = "";
-    var fastChange = 0;
-    //var showmoreStatus = false;
 
-    onOver.addEventListener("click", function () {
-      fastChange = 0;
-    });
-    onOver.addEventListener("mouseover", function (event) {
-      //WanaFix??
-      isHover = event.target.nextSibling;
-      if (
-        fastChange === 1 &&
-        !event.target.classList.contains("movieposter-more")
-      ) {
-        if (pastHover !== isHover) {
-          pastHover.classList.remove("showinfo");
-        }
-        pastHover = isHover;
-        event.target.nextSibling.classList.add("showinfo");
-      } else if (!event.target.classList.contains("movieposter-more")) {
-        pastHover = isHover;
-        document.querySelector(".top-main-motion").pause();
-        event.target.nextSibling.classList.add("showinfo");
-        fastChange = 1;
-      } else {
-        document.querySelector(".top-main-motion").pause();
-      }
-    });
-    onOver.addEventListener("mouseleave", function () {
-      setTimeout(() => {
-        document.querySelector(".poster").classList.add("outposter");
-        if (document.querySelector(".top-main-motion") != "ended") {
-          document.querySelector(".top-main-motion").play();
-        }
-      }, 2000);
-      document.querySelector(".poster").classList.remove("outposter");
-      isHover.classList.remove("showinfo");
-      pastHover = isHover;
-      fastChange = 0;
-    });
   },
 };
 </script>
 
 <style scoped>
+
 .main-home {
   z-index: 5;
   background-image: linear-gradient(
@@ -503,11 +498,6 @@ export default {
   transition: color 0.5s;
 }
 
-.content-list:hover {
-  color: #fff !important;
-  transition: color 0.5s;
-}
-
 .explore-all {
   cursor: pointer;
 }
@@ -521,13 +511,6 @@ export default {
   transition: 0.7s;
 }
 
-.list-name:hover .more-link {
-  font-size: 0.9vw;
-  margin-left: 1vw;
-  opacity: 1;
-  transition: 0.7s;
-}
-
 .more-link-run {
   font-size: 0.9vw !important;
   color: #fff !important;
@@ -536,14 +519,7 @@ export default {
   transition: 0.4s;
 }
 
-.list-name:hover .more-link-run {
-  font-size: 0.9vw;
-  margin-left: 6vw;
-  opacity: 1;
-  transition: 0.4s;
-}
-
-.my-list-cal {
+.my-list-col {
   display: flex;
 }
 
@@ -590,19 +566,11 @@ export default {
   transform: scale(1.5);
 }
 
-.movie-group:hover .movieposter {
-  border-radius: 5px 5px 0 0;
-}
-
 .movieinfo {
   display: none;
   color: #fff;
   padding: 1vw;
   background-color: #222;
-}
-
-.movieinfo:hover {
-  display: block;
 }
 
 .showinfo {
@@ -618,6 +586,10 @@ export default {
 .icon-left {
   display: flex;
   width: 12vw;
+}
+
+.movieinfo:hover {
+  display: block;
 }
 
 .btn {
@@ -683,8 +655,9 @@ export default {
   border-radius: 5px;
   transition: 0.5s;
   width: 950.6px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(calc(-40vw - 4.5em));
+  transform: translate(-50%, -47%);
   box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
   background-color: #181818;
   position: fixed;
@@ -709,11 +682,15 @@ export default {
 }
 .shadow-movie {
   position: absolute;
-  top: -10vw;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /*background: linear-gradient(to top, #181818, transparent 50%);*/
+    background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1) 1%,
+    rgba(24, 24, 24, 0)
+  );
 }
 
 .more-like-text {
