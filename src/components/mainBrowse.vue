@@ -187,6 +187,8 @@ export default {
 }
 
 .episode-title {
+      font-family: HelveticaNeueBd,sans-serif!important;
+
     position: absolute;
     bottom: 5vw;
     width: 40vw;
