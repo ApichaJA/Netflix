@@ -17,8 +17,13 @@
       <li class="nav-item">
         <router-link
           class="nav-link"
+<<<<<<< HEAD
           :to="{ name: 'TVshow' }"
           :class="{ 'nav-link-active': this.$route.name === 'TVshow' }"
+=======
+          :to="{ name: 'Home' }"
+          :class="{ 'nav-link-active': this.$route.name === 'TVShows' }"
+>>>>>>> f152ab8ef39b9fb7356a25673e0e1bf59f2ac76b
         >
           TV Shows
         </router-link>
@@ -28,7 +33,7 @@
         <router-link
           class="nav-link"
           :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Home' }"
+          :class="{ 'nav-link-active': this.$route.name === 'Movies' }"
         >
           Movies
         </router-link>
@@ -38,9 +43,9 @@
         <router-link
           class="nav-link"
           :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Home' }"
+          :class="{ 'nav-link-active': this.$route.name === 'New' }"
         >
-          Latest
+          New & Popular
         </router-link>
       </li>
 
@@ -48,7 +53,7 @@
         <router-link
           class="nav-link"
           :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Home' }"
+          :class="{ 'nav-link-active': this.$route.name === 'List' }"
         >
           My List
         </router-link>
@@ -117,9 +122,9 @@ export default {
 
 <style scoped>
 nav {
-    font-family: HelveticaNeue,sans-serif;
-
-  padding: 1.1vh 3vw;
+  font-family: HelveticaNeueLight;
+  padding: 0 4%;
+  height: 68px;
   z-index: 1;
   width: 100%;
   position: fixed;
@@ -139,7 +144,7 @@ nav {
 
 .nav-link {
   color: #e5e5e5 !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 .nav-link:hover {
   opacity: 0.5;
@@ -174,8 +179,6 @@ nav {
   font-size: 1.5vw;
   margin-right: 1vw;
 }
-
-
 
 .btn-caret-account{
   position: relative;
