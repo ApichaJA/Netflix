@@ -3,22 +3,27 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
 export default new Vuex.Store({
-    state: {
-        todos:[ 
-     {
-        title: "assignment"
-     },
-   ],
-     mutations: {
-       increment (state) {
-         state.count++
-       }
-     },
-     actions: {
-     },
-     modules: {
-     }
-    }
+  state: {
+      genres: '',
+  },
+
+  getters:{
+    getGenres(state){
+      return state.genres
+    },
+  },
+
+  mutations: {
+    excicute(state, order){
+      state.genres = order
+    },
+  },
+  actions: {
+    selectGenres(genresSelect, genres){
+      genresSelect.commit('excicute', this.state.genres = genres)
+    },
+  },
+  modules: {
+  }
 })

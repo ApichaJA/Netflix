@@ -1,4 +1,5 @@
 <template>
+<div>
   <nav class="navbar navbar-expand-sm">
     <img src="@/assets/netflix-logo.png" width="98px" />
     <div class="navbar-container">
@@ -27,7 +28,7 @@
             <li class="nav-item">
         <router-link
           class="nav-link"
-          :to="{ name: 'Home' }"
+          :to="{ name: 'Movies' }"
           :class="{ 'nav-link-active': this.$route.name === 'Movies' }"
         >
           Movies
@@ -40,7 +41,7 @@
           :to="{ name: 'Home' }"
           :class="{ 'nav-link-active': this.$route.name === 'New' }"
         >
-          New & Popular
+          Latest
         </router-link>
       </li>
 
@@ -92,6 +93,40 @@
 
     </div>
   </nav>
+            <div class="showTitlepage" v-if="this.$route.name === 'TVshow' || this.$route.name === 'Movies'">
+            <span v-if="this.$route.name === 'TVshow'">TV Shows</span>
+            <span v-if="this.$route.name === 'Movies'">Movies</span>
+            <div class="genrespage">
+              <button class="genresbox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
+                Genres
+                <i
+                  class="fas fa-caret-down pr-2"
+                  style="position: absolute; right:50px"
+                ></i>
+              </button>
+              <div v-if="showSelectgenresBox" class="selectgenresBox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
+                  <div class="selectgenresBox-col">
+
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Action')">Action</button>
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Crime')">Crime</button>
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Drama')">Drama</button>
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Biography')">Biography</button>
+                  </div>
+                  <div class="selectgenresBox-col">
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('History')">History</button>
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Adventure')">Adventure</button>
+                <button class="btn genres-item mr-5" v-on:click="selectGenres('Fantasy')">Fantasy</button>
+                </div>
+                 <div class="selectgenresBox-col">
+                <button class="btn genres-item" v-on:click="selectGenres('Comedy')">Comedy</button>
+                <button class="btn genres-item" v-on:click="selectGenres('Romance')">Romance</button>
+                <button class="btn genres-item" v-on:click="selectGenres('SciFi')">SciFi</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+  </div>
 </template>
 
 <script>
@@ -99,6 +134,8 @@ export default {
   data() {
     return {
       showSearch : false,
+
+      showSelectgenresBox: false,
     }
   },
 
@@ -106,12 +143,13 @@ export default {
     searchInput(){
       this.showSearch = true
       document.querySelector(".input-search-box-hide").autofocus;
+    },
+    selectGenres(genres){
+      this.$store.dispatch("selectGenres", genres);
     }
   },
 
-  mounted() {
-    console.log(this.$route);
-  },
+
 };
 </script>
 
@@ -219,5 +257,61 @@ nav {
   opacity: 1;
   transition:width .3s;
 }
+
+.showTitlepage {
+  padding: 0 3.1vw;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  font-size: 2.5vw;
+  color: #fff;
+  z-index: 5;
+  top: 3.9vw;
+  margin-left: 0.7vw;
+}
+
+.selectgenresBox {
+  background-color: #000;
+  position: absolute;
+    text-align: left;
+    padding:0 15px 5px 15px;
+    line-height: .8em;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+.selectgenresBox-col{
+    display: table-cell;
+}
+
+.genres-item{
+    display: inline-block;
+    color: #fff;
+    font-size: .8vw;
+    padding: 0;
+}
+
+.genres-item:hover{
+    text-decoration: underline;
+}
+
+.genresbox {
+  border: 1px solid #fff;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 1vw;
+  width: fit-content;
+  padding: 0.2em 3vw 0.2em 10px;
+}
+
+.genresbox:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.genrespage {
+  margin-left: 1em;
+}
+
 
 </style>

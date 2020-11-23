@@ -310,7 +310,6 @@ export default {
       });
       var genMovie = [];
       top_movie.forEach((element) => {
-        console.log();
         if (
           (toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
             element.genres[
@@ -611,6 +610,7 @@ export default {
   width: 15.5vw;
   border-radius: 5px;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .movieposter-more {

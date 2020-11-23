@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Genres from '@/views/Genres.vue'
 import TVshow from '@/views/TVshow.vue'
+import Movies from '@/views/Movies.vue'
 
 Vue.use(VueRouter)
 
@@ -17,9 +18,14 @@ const routes = [{
         component: Genres,
       },
       {
-        path: "/tvshow/",
+        path: "/tvshow",
         name: "TVshow",
         component: TVshow,
+      },
+      {
+        path: "/movies",
+        name: "Movies",
+        component: Movies,
       },
 ]
 
