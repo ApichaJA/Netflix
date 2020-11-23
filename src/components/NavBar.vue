@@ -3,58 +3,58 @@
   <nav class="navbar navbar-expand-sm">
     <img src="@/assets/netflix-logo.png" width="98px" />
     <div class="navbar-container">
-    <div class="nav-left">
-    <ul class="navbar-nav ml-4">
-      <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Home' }"
-        >
-          Home
-        </router-link>
-      </li>
+      <div class="nav-left">
+        <ul class="navbar-nav ml-4">
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Home' }"
+              :class="{ 'nav-link-active': this.$route.name === 'Home' }"
+            >
+              Home
+            </router-link>
+          </li>
 
-      <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'TVshow' }"
-          :class="{ 'nav-link-active': this.$route.name === 'TVshow' }"
-        >
-          TV Shows
-        </router-link>
-      </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'TVshow' }"
+              :class="{ 'nav-link-active': this.$route.name === 'TVshow' }"
+            >
+              TV Shows
+            </router-link>
+          </li>
 
-            <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'Movies' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Movies' }"
-        >
-          Movies
-        </router-link>
-      </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Home' }"
+              :class="{ 'nav-link-active': this.$route.name === 'Movies' }"
+            >
+              Movies
+            </router-link>
+          </li>
 
-            <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'New' }"
-        >
-          Latest
-        </router-link>
-      </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Home' }"
+              :class="{ 'nav-link-active': this.$route.name === 'New' }"
+            >
+              New & Popular
+            </router-link>
+          </li>
 
-            <li class="nav-item">
-        <router-link
-          class="nav-link"
-          :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'List' }"
-        >
-          My List
-        </router-link>
-      </li>
-      </ul>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :to="{ name: 'Home' }"
+              :class="{ 'nav-link-active': this.$route.name === 'List' }"
+            >
+              My List
+            </router-link>
+          </li>
+        </ul>
       </div>
 
       <div class="nav-right">
@@ -63,34 +63,41 @@
             <i class="fas fa-search btn-search"></i>
           </button>
         </div>
-          <div class="input-search-group">
-            <button class="btn search-btn-hide" :class="{'search-btn-show':showSearch}">
+        <div class="input-search-group">
+          <button
+            class="btn search-btn-hide"
+            :class="{ 'search-btn-show': showSearch }"
+          >
             <i class="fas fa-search btn-search"></i>
           </button>
-          <input @autofocus="showSearch" :class="{'input-search-box': showSearch}" class="input-search-box-hide" type="text" placeholder="Title, people, genres">
-          </div>
-      
+          <input
+            @autofocus="showSearch"
+            :class="{ 'input-search-box': showSearch }"
+            class="input-search-box-hide"
+            type="text"
+            placeholder="Title, people, genres"
+          />
+        </div>
+
         <div class="gift-box">
           <button class="btn">
             <i class="fas fa-gift btn-gift"></i>
           </button>
         </div>
-      
+
         <div class="noti-box">
           <button class="btn">
             <i class="fas fa-bell btn-noti"></i>
           </button>
         </div>
-      
+
         <div class="acc-box">
           <button class="btn">
             <i class="fas fa-user-circle btn-account"></i>
             <i class="fas fa-caret-down btn-caret-account"></i>
           </button>
         </div>
-
       </div>
-
     </div>
   </nav>
             <div class="showTitlepage" v-if="this.$route.name === 'TVshow' || this.$route.name === 'Movies'">

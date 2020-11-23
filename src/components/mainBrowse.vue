@@ -1,7 +1,7 @@
 <template>
   <div class="main-browse">
     <div class="videoWrapper">
-      <div class="feach-video" v-on:change="volumeSelect('unmuted')">
+      <div class="feach-video" v-on:change="volumeSelect('unmuted')" @mouseover="mouseOverVideo()">
         <img
           class="poster"
           :class="{ outposter: showPoster === false }"
@@ -126,6 +126,9 @@ export default {
       window.addEventListener("pageshow", onWindowFocusChange);
       window.addEventListener("pagehide", onWindowFocusChange);
     },
+    mouseOverVideo(){
+      this.$refs.videoRef.play();
+    }
   },
   computed: {
     topvideoImg() {

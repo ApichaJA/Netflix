@@ -5,7 +5,7 @@
       <div class="movie-content">
         <div class="list-name">
           <span class="content-list">{{  this.$store.getters.getGenres }}</span>
-
+<router-link :to="{ name: 'Genres', params: {Genres:listmovies} }"></router-link>
           <div class="explore-all">
             <span class="more-link">Explore All</span>
             <span class="more-link-run"
@@ -16,11 +16,11 @@
         <div class="my-list-col">
           <div
             v-for="movieList in movieStock"
-            :key="movieList.title"
+            :key="movieList.poster"
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
             @mouseleave="smoothHoveroff()"
-            v-show="fillter(movieList.genres)"
+            v-show="filter(movieList.genres)"
           >
             <div
               
@@ -337,9 +337,8 @@ export default {
       return gen;
     },
 
-    fillter(filterGen) {
+    filter(filterGen) {
       if (this.$store.getters.getGenres === "") {
-        console.log("All")
         return true;
       } 
       else if (filterGen.indexOf(this.$store.getters.getGenres) > -1) {

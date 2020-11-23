@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Genres from '@/views/Genres.vue'
 import TVshow from '@/views/TVshow.vue'
 import Movies from '@/views/Movies.vue'
+import Latest from '@/views/Latest.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes = [{
         path: "/movies",
         name: "Movies",
         component: Movies,
+      },
+      {
+        path: "/latest",
+        name: "Latest",
+        component: Latest,
       },
 ]
 
