@@ -23,11 +23,29 @@ body {
     background-color: #141414;
 }
 @font-face{
+  font-family: HelveticaNeue;
+  src: url(../src/font/HelveticaNeue.ttf);
+  
   font-family: HelveticaNeueBd;
   src: url(../src/font/HelveticaNeueBd.ttf);
 
-  font-family: HelveticaNeue;
-  src: url(../src/font/HelveticaNeue.ttf);
+
+  font-family: HelveticaNeuBold;
+  src: url(../src/font/Helvetica\ Neu\ Bold.ttf);
+  
+  font-family: HelveticaNeueBlackCond;
+  src: url(../src/font/HelveticaNeue\ BlackCond.ttf);
+  
+  font-family: HelveticaNeueLight;
+  src: url(../src/font/HelveticaNeue\ Light.ttf);
+  /* HelveticaNeue BlackCond
+  HelveticaNeue Light
+  HelveticaNeue Medium
+  HelveticaNeue Thin
+  HelveticaNeueHv
+  HelveticaNeueIt
+  HelveticaNeueLt
+  HelveticaNeueMed */
 }
 
 
