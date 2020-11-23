@@ -7,6 +7,7 @@
             <video ref="videoRef" :muted='videoEvent' autoplay class="top-main-motion" @ended="videoEnd('ended')">
                 <source :src="topvideo" type="video/mp4">
             </video>
+            <!--<span v-if="this.$route.name === tvshow">TV Sshow</span>-->
             <div class="site-left-info">
                 <div class="logo-ep">
                     <img :src="topvideoImg">
@@ -122,6 +123,8 @@ export default {
             this.showPoster = false
             this.$refs.videoRef.play();
         }, 2000)
+
+        console.log(this.$route)
     },
 
 }

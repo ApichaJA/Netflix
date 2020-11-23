@@ -17,8 +17,8 @@
       <li class="nav-item">
         <router-link
           class="nav-link"
-          :to="{ name: 'Home' }"
-          :class="{ 'nav-link-active': this.$route.name === 'Home' }"
+          :to="{ name: 'TVshow' }"
+          :class="{ 'nav-link-active': this.$route.name === 'TVshow' }"
         >
           TV Shows
         </router-link>

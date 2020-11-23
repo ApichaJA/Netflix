@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Genres from '@/views/Genres.vue'
+import TVshow from '@/views/TVshow.vue'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ const routes = [{
         path: "/Genres/:Genres",
         name: "Genres",
         component: Genres,
+      },
+      {
+        path: "/tvshow/",
+        name: "TVshow",
+        component: TVshow,
       },
 ]
 

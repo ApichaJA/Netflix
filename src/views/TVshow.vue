@@ -231,7 +231,7 @@ export default {
 
   data() {
     return {
-      showGenres: this.$route.params.Genres,
+      showGenres: "Action",
       movieStock: {
         Action: [],
         Crime: [],
