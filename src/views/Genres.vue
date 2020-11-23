@@ -16,7 +16,7 @@
         <div class="my-list-col">
           <div
             v-for="movieList in showmovie(showGenres)"
-            :key="movieList.title"
+            :key="movieList.poster"
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
             @mouseleave="smoothHoveroff()"

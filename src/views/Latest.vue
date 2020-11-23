@@ -1,10 +1,9 @@
 <template>
   <div>
-    <mainBrowse />
     <div class="main-home">
       <div class="movie-content">
         <div class="list-name">
-          <span class="content-list">{{  this.$store.getters.getGenres }}</span>
+          <span class="content-list">Latest</span>
 
           <div class="explore-all">
             <span class="more-link">Explore All</span>
@@ -20,7 +19,6 @@
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
             @mouseleave="smoothHoveroff()"
-            v-show="filter(movieList.genres)"
           >
             <div
               
@@ -221,16 +219,11 @@
 </template>
 
 <script>
-import mainBrowse from "@/components/mainBrowse";
-import top_movie from "@/assets/movieJson/json/top-rated-movies-01.json";
+import top_movie from "@/assets/movieJson/json/movies-in-theaters.json";
 
 //import store from "@/store"
 
 export default {
-  components: {
-    mainBrowse,
-  },
-
   data() {
     return {
       showGenres: this.$store.getters.getGenres,
@@ -253,17 +246,14 @@ export default {
       if (this.onPopup === false) {
         setTimeout(() => {
           (this.smoothHoverStatus = true), (this.onMouseOver = title);
-          document.querySelector(".top-main-motion").pause();
         }, 800);
       }
 
       if (title !== data) {
         this.smoothHoverStatus = false;
-        document.querySelector(".top-main-motion").play();
       }
     },
     smoothHoveroff() {
-      document.querySelector(".top-main-motion").play();
       this.smoothHoverStatus = false;
       this.onMouseOver = "";
     },
@@ -359,13 +349,13 @@ export default {
 <style scoped>
 .main-home {
   transition: opacity 3s;
-  z-index: 5;
+  z-index: 3;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
     rgba(0, 0, 0, 0)
   );
-  position: absolute;
+  margin-top: 7em;
   padding: 0 3.1vw;
   top: 43.7vw;
   left: 0;

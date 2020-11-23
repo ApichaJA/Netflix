@@ -28,7 +28,7 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{ name: 'Home' }"
+              :to="{ name: 'Movies' }"
               :class="{ 'nav-link-active': this.$route.name === 'Movies' }"
             >
               Movies
@@ -38,10 +38,10 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{ name: 'Home' }"
-              :class="{ 'nav-link-active': this.$route.name === 'New' }"
+              :to="{ name: 'Latest' }"
+              :class="{ 'nav-link-active': this.$route.name === 'Latest' }"
             >
-              New & Popular
+              Latest
             </router-link>
           </li>
 
@@ -165,9 +165,10 @@ nav {
   font-family: HelveticaNeueLight;
   padding: 0 4%;
   height: 68px;
-  z-index: 1;
+  z-index: 5;
   width: 100%;
   position: fixed;
+  top: 0;
   background-color: transparent;
   background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
 }

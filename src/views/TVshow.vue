@@ -3,9 +3,9 @@
     <mainBrowse />
     <div class="main-home">
       <div class="movie-content">
+              <router-link :to="{ name: 'Genres', params: {Genres:this.$store.getters.getGenres} }">
         <div class="list-name">
           <span class="content-list">{{  this.$store.getters.getGenres }}</span>
-<router-link :to="{ name: 'Genres', params: {Genres:listmovies} }"></router-link>
           <div class="explore-all">
             <span class="more-link">Explore All</span>
             <span class="more-link-run"
@@ -13,6 +13,7 @@
             ></span>
           </div>
         </div>
+        </router-link>
         <div class="my-list-col">
           <div
             v-for="movieList in movieStock"
@@ -329,6 +330,11 @@ export default {
       return act;
     },
 
+    explorGenres(){
+      console.log(1)
+      return this.$store.getters.getGenres
+    },
+
     genres(genre) {
       var gen = "";
       genre.forEach((element) => {
@@ -359,7 +365,7 @@ export default {
 <style scoped>
 .main-home {
   transition: opacity 3s;
-  z-index: 5;
+  z-index: 3;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,

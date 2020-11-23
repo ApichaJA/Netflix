@@ -516,7 +516,7 @@ export default {
 
 <style scoped>
 .main-home {
-  z-index: 5;
+  z-index: 3;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
