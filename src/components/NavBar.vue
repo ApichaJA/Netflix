@@ -180,7 +180,7 @@ nav {
   font-family: HelveticaNeueLight;
   padding: 0 4%;
   height: 68px;
-  z-index: 5;
+  z-index: 2;
   width: 100%;
   position: fixed;
   top: 0;

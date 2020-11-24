@@ -520,7 +520,7 @@ export default {
 
 <style scoped>
 .main-home {
-  z-index: 3;
+  z-index: 1;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
@@ -587,6 +587,7 @@ export default {
 
 .my-list-col {
   display: flex;
+  z-index: 1;
 }
 
 .video-content-box {
@@ -724,6 +725,7 @@ export default {
   width: 950.6px;
   top: 50%;
   left: 50%;
+  z-index: 5;
   transform: translate(-50%, -47%);
   box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
   background-color: #181818;
