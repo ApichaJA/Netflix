@@ -5,7 +5,7 @@
         <img
           class="poster"
           :class="{ outposter: showPoster === false }"
-          src="@/assets/videos/wywlepposter.jpg"
+          src="@/assets/videos/whileyouweresleeping/wywlepposter.jpg"
         />
         <video
           ref="videoRef"
@@ -133,7 +133,7 @@ export default {
   computed: {
     topvideoImg() {
       var topimg = "logowywslp";
-      return require("@/assets/videos/" + topimg + ".png");
+      return require("@/assets/videos/whileyouweresleeping/" + topimg + ".png");
     },
     topvideoTitle() {
       var tileEp =
@@ -142,7 +142,7 @@ export default {
     },
     topvideo() {
       var movieName = "wywslp";
-      return require("@/assets/videos/" + movieName + ".mp4");
+      return require("@/assets/videos/whileyouweresleeping/" + movieName + ".mp4");
     },
   },
   mounted() {

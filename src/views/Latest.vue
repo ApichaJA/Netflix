@@ -14,7 +14,7 @@
         </div>
         <div class="my-list-col">
           <div
-            v-for="movieList in movieStock"
+            v-for="movieList in movieMylist"
             :key="movieList.poster"
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
@@ -59,7 +59,7 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu">
+                      <button class="btn icon-menu" v-on:click="addToMyList(movieList)">
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -227,7 +227,7 @@ export default {
   data() {
     return {
       showGenres: this.$store.getters.getGenres,
-      movieStock: [],
+      movieMylist: [],
 
       moreLikevideoInlist: [],
       moreInfo: "",
@@ -335,11 +335,14 @@ export default {
         return true
       }
     },
+        addToMyList(movie){
+      this.$store.dispatch("selectMylist", movie);
+    }
   },
 
   created() {
     top_movie.forEach((element) => {
-      this.movieStock.push(element);
+      this.movieMylist.push(element);
     });
   },
   mounted() {},

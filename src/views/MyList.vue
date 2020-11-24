@@ -1,16 +1,10 @@
 <template>
   <div>
-    <mainBrowse />
     <div class="main-home">
-      <div
-        class="movie-content"
-        v-for="(listmovies, index) in name"
-        :key="index"
-      >
-          <router-link :to="{ name: 'Genres', params: {Genres:listmovies} }">
+      <div class="movie-content">
         <div class="list-name">
-          <span class="content-list">{{ listmovies }}</span>
-          
+          <span class="content-list">My List</span>
+
           <div class="explore-all">
             <span class="more-link">Explore All</span>
             <span class="more-link-run"
@@ -18,16 +12,16 @@
             ></span>
           </div>
         </div>
-          </router-link>
         <div class="my-list-col">
           <div
-            v-for="movieList in showmovie(listmovies)"
-            :key="movieList.title"
+            v-for="movieList in movieMylist"
+            :key="movieList.poster"
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
             @mouseleave="smoothHoveroff()"
           >
             <div
+              
               :class="{
                 'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
@@ -36,9 +30,9 @@
             >
               <button
                 class="btn close-popup"
-                v-on:click="showmoredetailVideo(''),
-                onMouseOver = ''
-                onPopup = false
+                v-on:click="
+                  showmoredetailVideo(''), (onMouseOver = '');
+                  onPopup = false;
                 "
                 v-if="moreInfo === movieList.title"
               >
@@ -65,7 +59,7 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu" v-on:click="addToMyList(movieList)">
+                      <button class="btn icon-menu">
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -80,7 +74,7 @@
                       v-on:click="
                         showmoredetailVideo(movieList.title),
                           (moreInfo = movieList.title),
-                          onPopup = true
+                          (onPopup = true)
                       "
                     >
                       <button class="btn icon-menu">
@@ -225,48 +219,16 @@
 </template>
 
 <script>
-import mainBrowse from "@/components/mainBrowse";
-import top_movie from "@/assets/movieJson/json/top-rated-movies-01.json";
-import coming_soon from "@/assets/movieJson/json/movies-coming-soon.json";
+import top_movie from "@/assets/movieJson/json/movies-in-theaters.json";
+
 //import store from "@/store"
 
 export default {
-  components: {
-    mainBrowse,
-  },
-
-
-
   data() {
     return {
-      movieStock: {
-        Action: [],
-        Crime: [],
-        Drama: [],
-        Biography: [],
-        History: [],
-        Adventure: [],
-        Fantasy: [],
-        Comedy: [],
-        Romance: [],
-        SciFi: [],
-        ComingSoon: [],
-      },
+      showGenres: this.$store.getters.getGenres,
+      movieMylist: [],
 
-      name: [
-        "Action",
-        "Crime",
-        "Drama",
-        "Biography",
-        "History",
-        "Adventure",
-        "Fantasy",
-        "Comedy",
-        "Romance",
-        "SciFi",
-        "ComingSoon",
-      ],
-      movieInlist: [],
       moreLikevideoInlist: [],
       moreInfo: "",
       count: 0,
@@ -281,26 +243,19 @@ export default {
   methods: {
     smoothHover(title) {
       var data = this.onMouseOver;
-        if(this.onPopup === false){
-      setTimeout(() => {
+      if (this.onPopup === false) {
+        setTimeout(() => {
           (this.smoothHoverStatus = true), (this.onMouseOver = title);
-          document.querySelector('.top-main-motion').pause()
-      },800);
-        }
+        }, 800);
+      }
 
       if (title !== data) {
         this.smoothHoverStatus = false;
-        document.querySelector('.top-main-motion').play()
       }
     },
     smoothHoveroff() {
-      document.querySelector('.top-main-motion').play()
       this.smoothHoverStatus = false;
       this.onMouseOver = "";
-    },
-
-    showmovie(orderMovie) {
-      return this.movieStock[orderMovie];
     },
 
     moreLikevideoSort(orderMovie) {
@@ -310,28 +265,19 @@ export default {
       });
       var genMovie = [];
       top_movie.forEach((element) => {
-        if (
-          (toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
-            element.genres[
-              ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-            ] ||
+        if (genMovie.length <= Math.floor(Math.random() * 200) / 10) {
+          if (
             toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
               element.genres[
                 ~~(
                   (Math.floor(Math.random() * 100) / 10) %
                   element.genres.length
                 )
-              ] ||
-            toArr[~~((Math.floor(Math.random() * 100) / 10) % toArr.length)] ===
-              element.genres[
-                ~~(
-                  (Math.floor(Math.random() * 100) / 10) %
-                  element.genres.length
-                )
-              ]) &&
-          genMovie.length < 9 &&
-          this.moreLikevideoInlist.indexOf(element.title) !== -1
-        ) {
+              ] &&
+            genMovie.length < 9
+          ) {
+            this.moreLikevideoInlist.indexOf(element.title) !== -1;
+          }
           genMovie.push(element);
         }
       });
@@ -350,7 +296,7 @@ export default {
     },
 
     showmoredetailVideo(more) {
-        this.smoothHoverStatus = false;
+      this.smoothHoverStatus = false;
       this.moreInfo = more;
     },
 
@@ -381,155 +327,39 @@ export default {
       return gen;
     },
 
-    addToMyList(movie){
-      this.$store.dispatch("selectMylist", movie);
-    }
+    filter(filterGen) {
+      if (this.$store.getters.getGenres === "") {
+        return true;
+      } 
+      else if (filterGen.indexOf(this.$store.getters.getGenres) > -1) {
+        return true
+      }
+    },
   },
 
   created() {
-    coming_soon.forEach((element) => {
-      if (
-        element.id > ~~(Math.floor(Math.random() * 1000) / 10) &&
-        this.movieStock["ComingSoon"].length <= 5
-      ) {
-        if (this.movieInlist.indexOf(element.title) === -1) {
-          this.movieStock["ComingSoon"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-    });
-    top_movie.forEach((element) => {
-      if (this.movieStock["Action"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Action" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Action"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Crime"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Crime" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Crime"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Drama"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Drama" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Drama"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Biography"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Biography" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Biography"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["History"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "History" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["History"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Adventure"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Adventure" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Adventure"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Fantasy"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Fantasy" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Fantasy"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Comedy"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Comedy" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Comedy"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["Romance"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Romance" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["Romance"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      }
-      if (this.movieStock["SciFi"].length <= 5) {
-        if (
-          element.genres[
-            ~~((Math.floor(Math.random() * 100) / 10) % element.genres.length)
-          ] === "Sci-Fi" &&
-          this.movieInlist.indexOf(element.title) === -1
-        ) {
-          this.movieStock["SciFi"].push(element);
-          this.movieInlist.push(element.title);
-        }
-      } else {
-        this.moreLikevideoInlist.push(element.title);
-      }
+    this.$store.getters.getMylist.forEach((element) => {
+      this.movieMylist.push(element);
     });
   },
-
   mounted() {},
 };
 </script>
 
 <style scoped>
 .main-home {
+  transition: opacity 3s;
   z-index: 3;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
     rgba(0, 0, 0, 0)
   );
-  position: absolute;
-  padding: 0 3.1vw;
+  margin-top: 7em;
+  padding: 0 4vw;
   top: 43.7vw;
   left: 0;
+  text-align: left;
   margin-bottom: 10vw;
 }
 
@@ -540,12 +370,12 @@ export default {
 .list-name {
   display: flex;
   justify-content: left;
-  margin-bottom: 0.8vw;
+  margin-bottom: 5vw;
 }
 
 .content-list {
   display: block;
-  font-size: 1.4vw;
+  font-size: 2vw;
   color: #e5e5e5;
   line-height: 1.25vw;
   cursor: pointer;
@@ -586,19 +416,21 @@ export default {
 }
 
 .my-list-col {
-  display: flex;
+  display: inline-block;
+  text-align: left;
 }
 
 .video-content-box {
-  margin: 0.1vw;
+  margin: 1vw 1px 2vw 1px;
   width: 15.5vw;
   height: 8.5vw;
   background-color: #222;
   border-radius: 5px;
+  display: inline-flex;
 }
 
 .video-content-box:hover {
-  z-index: 3;
+  z-index: 1;
 }
 
 .movieposter {
@@ -624,6 +456,7 @@ export default {
 }
 
 .movie-group-wait:hover {
+  z-index: 5;
   background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0.7) 10%,

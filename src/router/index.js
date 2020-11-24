@@ -5,6 +5,7 @@ import Genres from '@/views/Genres.vue'
 import TVshow from '@/views/TVshow.vue'
 import Movies from '@/views/Movies.vue'
 import Latest from '@/views/Latest.vue'
+import MyList from '@/views/MyList.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes = [{
         path: "/latest",
         name: "Latest",
         component: Latest,
+      },
+      {
+        path: "/myList",
+        name: "myList",
+        component: MyList,
       },
 ]
 

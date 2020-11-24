@@ -1,6 +1,6 @@
 <template>
 <div>
-  <nav class="navbar navbar-expand-sm">
+  <nav class="navbar navbar-expand-sm" :class="{'setPosition' : this.$route.name === 'TVshow' || this.$route.name === 'Movies'}">
     <img src="@/assets/netflix-logo.png" width="98px" />
     <div class="navbar-container">
       <div class="nav-left">
@@ -48,8 +48,8 @@
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :to="{ name: 'Home' }"
-              :class="{ 'nav-link-active': this.$route.name === 'List' }"
+              :to="{ name: 'myList' }"
+              :class="{ 'nav-link-active': this.$route.name === 'myList' }"
             >
               My List
             </router-link>
@@ -107,8 +107,8 @@
               <button class="genresbox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
                 Genres
                 <i
-                  class="fas fa-caret-down pr-2"
-                  style="position: absolute; right:50px"
+                  class="fas fa-caret-down"
+                  style="position: absolute; left:22vw"
                 ></i>
               </button>
               <div v-if="showSelectgenresBox" class="selectgenresBox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
@@ -156,6 +156,21 @@ export default {
     }
   },
 
+mounted(){
+  function navBarPosition () {
+    if( this.scrollY > 10){
+    document.querySelector(".navbar").classList.add('nav-black')
+  }
+      if( this.scrollY > 80){
+    document.querySelector(".showTitlepage").classList.add('nav-showTitlepage')
+  }
+  else{
+    document.querySelector(".navbar").classList.remove('nav-black')
+    document.querySelector(".showTitlepage").classList.remove('nav-showTitlepage')
+  }
+}
+window.addEventListener("scroll", navBarPosition , false);
+}
 
 };
 </script>
@@ -171,6 +186,16 @@ nav {
   top: 0;
   background-color: transparent;
   background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+  transition: background-color .2s;
+}
+
+.setPosition{
+  position: absolute!important;
+}
+
+.nav-black{
+  background-color: black!important;
+  transition:background-color .6s;
 }
 
 .navbar-container{
@@ -199,6 +224,15 @@ nav {
 .nav-right{
   display: flex;
   align-items: center;
+}
+
+.nav-showTitlepage{
+  top: 0!important;
+  background-color: #000;
+  width: 100%;
+  position: fixed!important;
+  transition:background-color .3s;
+  margin: 0!important;
 }
 
 .btn-search{
@@ -268,7 +302,7 @@ nav {
 
 .showTitlepage {
   padding: 0 3.1vw;
-  position: absolute;
+  position:absolute;
   display: flex;
   align-items: center;
   font-size: 2.5vw;
@@ -289,6 +323,7 @@ nav {
 
 .selectgenresBox-col{
     display: table-cell;
+    width: 1vw;
 }
 
 .genres-item{

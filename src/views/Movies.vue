@@ -3,7 +3,6 @@
     <mainBrowse />
     <div class="main-home">
       <div class="movie-content">
-        <router-link :to="{ name: 'Genres', params: {Genres:this.$store.getters.getGenres} }">
         <div class="list-name">
           <span class="content-list">{{  this.$store.getters.getGenres }}</span>
 
@@ -14,7 +13,6 @@
             ></span>
           </div>
         </div>
-        </router-link>
         <div class="my-list-col">
           <div
             v-for="movieList in movieStock"
@@ -63,7 +61,7 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu">
+                      <button class="btn icon-menu" v-on:click="addToMyList(movieList)">
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -347,6 +345,9 @@ export default {
         return true
       }
     },
+    addToMyList(movie){
+      this.$store.dispatch("selectMylist", movie);
+    }
   },
 
   created() {
