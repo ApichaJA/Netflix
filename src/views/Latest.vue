@@ -10,7 +10,7 @@
             v-for="movieList in movieMylist"
             :key="movieList.poster"
             class="video-content-box"
-            @mouseover="smoothHover(movieList.title)"
+            @mouseover="smoothHover(movieList.title, movieList.posterUrl)"
             @mouseleave="smoothHoveroff()"
               v-show="search(movieList.title)"
           >
@@ -31,6 +31,7 @@
               >
                 <i class="far fa-times-circle"></i>
               </button>
+              <iframe v-if="onMouseOver === movieList.title||moreInfo === movieList.title" :src="clip(movieList.posterUrl)" width="100%" height="100%" frameborder="0" allow=" gyroscope;" class="showYoutube" :class="{'showYoutube-more':moreInfo === movieList.title}"/>
               <img
                 :class="{
                   'movieposter-more': moreInfo === movieList.title,
@@ -38,6 +39,20 @@
                 }"
                 :src="require('@/assets/movieJson/img/' + movieList.poster)"
               />
+                            <div class="site-right-info">
+          <button class="volume-up btn" v-if="moreInfo === movieList.title">
+            <i
+              class="fas fa-volume-up vector-volume"
+              v-if="videoEvent === false"
+              v-on:click="volumeSelect(true)"
+            ></i>
+            <i
+              class="fas fa-volume-mute vector-volume"
+              v-if="videoEvent === true"
+              v-on:click="volumeSelect(false)"
+            ></i>
+          </button>
+        </div>
               <div
                 class="movieinfo"
                 :class="{
@@ -232,7 +247,9 @@ export default {
     return {
       showGenres: this.$store.getters.getGenres,
       movieMylist: [],
-
+linkUrl: '',
+muteStatus: true,
+videoEvent: true,
       moreLikevideoInlist: [],
       moreInfo: "",
       count: 0,
@@ -245,21 +262,38 @@ export default {
   computed: {},
 
   methods: {
-    smoothHover(title) {
+        clip(link){
+      if(link){
+        this.linkUrl = link
+            return link+'?autoplay=0&showinfo=0&controls=0mute=1'
+      }
+    },
+    smoothHover(title, link) {
       var data = this.onMouseOver;
       if (this.onPopup === false) {
         setTimeout(() => {
           (this.smoothHoverStatus = true), (this.onMouseOver = title);
+          document.querySelector(".top-main-motion").pause();
         }, 800);
+        setTimeout(() => {
+          if(typeof link !== 'undefined'){
+            console.log(1)
+            document.querySelector('.showYoutube').src = this.linkUrl+"?&autoplay=1&showinfo=0&controls=0&mute=1&loop=1"
+          }
+        }, 900);
       }
 
       if (title !== data) {
         this.smoothHoverStatus = false;
+        document.querySelector(".top-main-motion").play();
       }
     },
     smoothHoveroff() {
+      if(this.moreInfo === '' || this.onPopup === true){
+        document.querySelector(".top-main-motion").play();
       this.smoothHoverStatus = false;
       this.onMouseOver = "";
+      }
     },
 
     moreLikevideoSort(orderMovie) {
@@ -371,6 +405,12 @@ export default {
             }
         }
       }
+    },
+        volumeSelect: function (event) {
+      this.videoEvent = event;
+      this.muteStatus = event;
+      document.querySelector('.showYoutube').src = this.linkUrl+=`?&autoplay=1&showinfo=0&controls=0&mute=0&loop=1`
+      document.querySelector('.showYoutube').style = "z-index:3"
     },
   },
 
@@ -610,7 +650,7 @@ export default {
   right: 10px;
   color: #fff;
   font-size: 2vw;
-  z-index: 1;
+  z-index: 5;
 }
 
 .more-detail-content {
@@ -696,5 +736,35 @@ export default {
 .about-movie-sec-text {
   color: #fff;
   font-size: 14px;
+}
+.showYoutube{
+  position: absolute;
+}
+
+.showYoutube-more{
+  position: absolute;
+  width: inherit;
+  height: 540px;
+}
+
+.site-right-info {
+  z-index: 1;
+  display: flex;
+  position: absolute;
+  right: 2vw;
+  top: 25em;
+}
+
+.volume-up {
+  display: flex;
+  align-content: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  padding: 0.8vw;
+  margin-right: 1vw;
+}
+.vector-volume {
+  font-size: 1.1vw;
+  color: #fff;
 }
 </style>

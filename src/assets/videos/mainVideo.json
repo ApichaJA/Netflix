@@ -1,41 +1,60 @@
 [
-    {
-        "title": "While you were sleeping",
-        "year": "2017",
-        "genres": ["Romance", "Fantasy"],
-        "poster":"wywlepposter.jpg",
-        "contentRating": "13",
-        "duration":"672",
-        "storyline":"A young woman has visions through her dreams of terrible things that will happen to people in the future.",
-        "actors": ["Bae Suzy", "Lee Jong-suk", "Jung Hae-in", "Lee Sang-yeob"],
-        "imdbRating":"8.4",
-     "posterUrl":"wywslp.mp4",
-     "movieLogo": "logowywslp.png"
-    },
-    {
-        "title": "TwoWorldsApart",
-        "year": "2018",
-        "genres": ["Fantasy", "Romance"],
-        "poster":"TwoWorldsApart.jpg",
-        "contentRating": "16",
-        "duration":"70",
-        "storyline":"W starts with the younger years of its main character Kang Chul (Lee Jong-suk), a handsome and intelligent boy who is also skilled in shooting.",
-        "actors": ["Kim Eui-sung", "Jung Yoo-jin", "Lee Tae-hwan", "Park Won-sang", "Cha Kwang-soo"],
-        "imdbRating":"8.6",
-     "posterUrl": "twoworldsapart.mp4",
-     "movieLogo": "TwoWorldsApart.png"
-    },
-    {
-        "title": "",
-        "year": "",
-        "genres": [],
-        "poster":"",
-        "contentRating": "",
-        "duration":"",
-        "storyline":"",
-        "actors": [],
-        "imdbRating":"",
-     "posterUrl": "",
-     "movieLogo": ""
-    }   
+  {
+    "title": "While you were sleeping",
+    "year": "2017",
+    "genres": ["Romance", "Fantasy"],
+    "poster": "wywlepposter.jpg",
+    "contentRating": "13",
+    "duration": "672",
+    "storyline": "A young woman has visions through her dreams of terrible things that will happen to people in the future.",
+    "actors": ["Bae Suzy", "Lee Jong-suk", "Jung Hae-in", "Lee Sang-yeob"],
+    "imdbRating": "8.4",
+    "posterUrl": "wywslp.mp4",
+    "movieLogo": "logowywslp.png"
+  },
+  {
+    "title": "TwoWorldsApart",
+    "year": "2018",
+    "genres": ["Fantasy", "Romance"],
+    "poster": "TwoWorldsApart.jpg",
+    "contentRating": "16",
+    "duration": "70",
+    "storyline": "W starts with the younger years of its main character Kang Chul (Lee Jong-suk), a handsome and intelligent boy who is also skilled in shooting.",
+    "actors": [
+      "Kim Eui-sung",
+      "Jung Yoo-jin",
+      "Lee Tae-hwan",
+      "Park Won-sang",
+      "Cha Kwang-soo"
+    ],
+    "imdbRating": "8.6",
+    "posterUrl": "twoworldsapart.mp4",
+    "movieLogo": "TwoWorldsApart.png"
+  },
+  {
+    "title": "Startup",
+    "year": "2020",
+    "genres": ["Drama", "Romance"],
+    "poster": "startup.jpeg",
+    "contentRating": "13",
+    "duration": "84",
+    "storyline": "Start-up is an observational documentary film series about deep tech start-ups in Switzerland that want to change the world.",
+    "actors": ["Bae Suzy", "Nam Joo-hyuk", "Kim Seon-ho", "Kang Han-na"],
+    "imdbRating": "9",
+    "posterUrl": "startup.mp4",
+    "movieLogo": ""
+  },
+  {
+    "title": "It's Okay to Not Be Okay",
+    "year": "2020",
+    "genres": ["Romance", "Drama"],
+    "poster": "It's Okay to Not Be Okay.png",
+    "contentRating": "16",
+    "duration": "70",
+    "storyline": "Moon Gang-tae (Kim Soo-hyun) lives with his autistic older brother Moon Sang-tae (Oh Jung-se).",
+    "actors": ["Kim Soo-hyun", "Seo Ye-ji", "Oh Jung-se", "Park Kyu-young"],
+    "imdbRating": "8.8",
+    "posterUrl": "It's Okay to Not Be Okay.mp4",
+    "movieLogo": "It's Okay to Not Be Okaylogo.png"
+  }
 ]

@@ -16,6 +16,7 @@
           autoplay
           class="top-main-motion"
           @ended="videoEnd('ended')"
+          v-on:click="replayVideo()"
         >
           <source :src="topvideo" type="video/mp4" />
         </video>
@@ -60,7 +61,7 @@
               v-on:click="replayVideo(false)"
             ></i>
           </button>
-          <div class="rating-main-box"><span>13+</span></div>
+          <div class="rating-main-box"><span>{{topvideoContentRate}}+</span></div>
         </div>
       </div>
     </div>
@@ -85,6 +86,7 @@
         >
           <source :src="topvideo" type="video/mp4" />
         </video>
+        
               <div class="more-detail-content">
 <div class="shadow-movie"></div>
 
@@ -226,7 +228,7 @@ export default {
   created() {
     if(this.$route.name !== this.markRoute){
       this.markRoute = this.$route.name
-      this.randomMovie = Math.floor(Math.random() * 2); 
+      this.randomMovie = Math.floor(Math.random() * 4); 
       console.log(this.randomMovie)
     }
     this.detectFocusOut();
@@ -349,7 +351,12 @@ export default {
       return this.posterStock[this.randomMovie].title
     },
     topvideoImg() {
-      return require(`@/assets/videos/${this.posterStock[this.randomMovie].title}/${this.posterStock[this.randomMovie].movieLogo}`)
+      if(this.posterStock[this.randomMovie].movieLogo != ''){
+        return require(`@/assets/videos/${this.posterStock[this.randomMovie].title}/${this.posterStock[this.randomMovie].movieLogo}`)
+      }
+      else{
+        return null
+      }
     },
     topvideoTitle() {
       return this.posterStock[this.randomMovie].storyline
@@ -383,7 +390,10 @@ export default {
 
     genresMovie(){
       return this.posterStock[this.randomMovie].genres
-    }
+    },
+topvideoContentRate(){
+  return this.posterStock[this.randomMovie].contentRating
+}
   },
 
   mounted() {
@@ -652,4 +662,7 @@ export default {
   font-size: 2vw;
   z-index: 1;
 }
+
+
+
 </style>
