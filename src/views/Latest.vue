@@ -4,13 +4,6 @@
       <div class="movie-content">
         <div class="list-name">
           <span class="content-list">Latest</span>
-
-          <div class="explore-all">
-            <span class="more-link">Explore All</span>
-            <span class="more-link-run"
-              ><i class="fas fa-chevron-right"></i
-            ></span>
-          </div>
         </div>
         <div class="my-list-col">
           <div
@@ -19,9 +12,9 @@
             class="video-content-box"
             @mouseover="smoothHover(movieList.title)"
             @mouseleave="smoothHoveroff()"
+              v-show="search(movieList.title)"
           >
             <div
-              
               :class="{
                 'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
@@ -59,7 +52,18 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu" v-on:click="addToMyList(movieList)">
+                       <button
+                        v-if="!checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="addToMyList(movieList)"
+                      >
+                        <i class="fas fa-plus-circle info-menu-group-icon"></i>
+                      </button>
+                      <button
+                        v-if="checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="removeToMyList(movieList)"
+                      >
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -335,9 +339,39 @@ export default {
         return true
       }
     },
-        addToMyList(movie){
+    addToMyList(movie) {
+      this.clickMylistEvent = false
       this.$store.dispatch("selectMylist", movie);
-    }
+    },
+    removeToMyList(movie) {
+      this.clickMylistEvent = true
+      this.$store.dispatch("removeMylist", movie);
+    },
+    search(movie){
+      if(this.$store.getters.getOrder === ''){
+        return true
+      }
+      else if (this.$store.getters.getOrder !== ''){
+        for (let index = 0; index < this.$store.getters.getOrder.length; index++) {
+          if(this.$store.getters.getOrder[index].toLowerCase() === movie[index].toLowerCase()){
+            return true
+        }
+        }
+
+      }
+    },
+        checkMovieInMyList(title) {
+      if (this.$store.getters.getMylist.length === 0) {
+        return false;
+      } 
+      else {
+        for (let index = 0; index < this.$store.getters.getMylist.length; index++) {
+            if (title === this.$store.getters.getMylist[index].title) {
+              return true;
+            }
+        }
+      }
+    },
   },
 
   created() {
@@ -352,7 +386,7 @@ export default {
 <style scoped>
 .main-home {
   transition: opacity 3s;
-  z-index: 3;
+  z-index: 1;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
@@ -367,6 +401,7 @@ export default {
 
 .movie-content {
   margin-bottom: 3vw;
+  text-align: left;
 }
 
 .list-name {
@@ -506,6 +541,7 @@ export default {
 
 .menu-more-detail {
   display: flex;
+  text-align: left;
   margin-left: 0.5vw;
   text-align: left;
   font-size: 0.55vw;

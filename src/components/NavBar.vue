@@ -76,6 +76,8 @@
             class="input-search-box-hide"
             type="text"
             placeholder="Title, people, genres"
+            v-model="orderMover"
+            :change="search()"
           />
         </div>
 
@@ -108,10 +110,10 @@
                 Genres
                 <i
                   class="fas fa-caret-down"
-                  style="position: absolute; left:22vw"
+                  style="padding-left:1.8vw"
                 ></i>
               </button>
-              <div v-if="showSelectgenresBox" class="selectgenresBox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
+              <div v-show="showSelectgenresBox" class="selectgenresBox" v-on:click="showSelectgenresBox = !showSelectgenresBox">
                   <div class="selectgenresBox-col">
 
                 <button class="btn genres-item mr-5" v-on:click="selectGenres('Action')">Action</button>
@@ -140,6 +142,7 @@
 export default {
   data() {
     return {
+      orderMover: "",
       showSearch : false,
 
       showSelectgenresBox: false,
@@ -153,20 +156,28 @@ export default {
     },
     selectGenres(genres){
       this.$store.dispatch("selectGenres", genres);
-    }
+    },
+    search() {
+      this.$store.dispatch("searching", this.orderMover);
+    },
   },
 
 mounted(){
   function navBarPosition () {
-    if( this.scrollY > 10){
+    if( this.scrollY > 10 && document.querySelector(".navbar").className !== 'navbar navbar-expand-sm nav-black'){
     document.querySelector(".navbar").classList.add('nav-black')
   }
-      if( this.scrollY > 80){
-    document.querySelector(".showTitlepage").classList.add('nav-showTitlepage')
+    if( this.scrollY > 80){
+      if(document.querySelector(".showTitlepage") !== null){
+        document.querySelector(".showTitlepage").className !== 'showTitlepage nav-showTitlepage'
+        document.querySelector(".showTitlepage").classList.add('nav-showTitlepage')
+      }
   }
-  else{
+  else if( this.scrollY < 10){
     document.querySelector(".navbar").classList.remove('nav-black')
-    document.querySelector(".showTitlepage").classList.remove('nav-showTitlepage')
+    if(document.querySelector(".showTitlepage") !== null){
+        document.querySelector(".showTitlepage").classList.remove('nav-showTitlepage')
+    }
   }
 }
 window.addEventListener("scroll", navBarPosition , false);
@@ -230,6 +241,7 @@ nav {
   top: 0!important;
   background-color: #000;
   width: 100%;
+  height: 4.5vw;
   position: fixed!important;
   transition:background-color .3s;
   margin: 0!important;
@@ -309,6 +321,7 @@ nav {
   color: #fff;
   z-index: 5;
   top: 3.9vw;
+  margin-top:1vw;
   margin-left: 0.7vw;
 }
 
@@ -345,7 +358,7 @@ nav {
   align-items: center;
   font-size: 1vw;
   width: fit-content;
-  padding: 0.2em 3vw 0.2em 10px;
+  padding: 0.2em .5vw 0.2em 10px;
 }
 
 .genresbox:hover {

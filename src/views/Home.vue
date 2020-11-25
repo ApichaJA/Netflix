@@ -6,19 +6,20 @@
         class="movie-content"
         v-for="(listmovies, index) in name"
         :key="index"
+        v-show="outList(listmovies)"
       >
-          <router-link :to="{ name: 'Genres', params: {Genres:listmovies} }">
-        <div class="list-name">
-          <span class="content-list">{{ listmovies }}</span>
-          
-          <div class="explore-all">
-            <span class="more-link">Explore All</span>
-            <span class="more-link-run"
-              ><i class="fas fa-chevron-right"></i
-            ></span>
+        <router-link :to="{ name: 'Genres', params: { Genres: listmovies } }">
+          <div class="list-name">
+            <span class="content-list">{{ listmovies }}</span>
+
+            <div class="explore-all">
+              <span class="more-link">Explore All</span>
+              <span class="more-link-run"
+                ><i class="fas fa-chevron-right"></i
+              ></span>
+            </div>
           </div>
-        </div>
-          </router-link>
+        </router-link>
         <div class="my-list-col">
           <div
             v-for="movieList in showmovie(listmovies)"
@@ -28,6 +29,7 @@
             @mouseleave="smoothHoveroff()"
           >
             <div
+              v-if="search(movieList.title, movieList.genres)"
               :class="{
                 'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
@@ -36,9 +38,9 @@
             >
               <button
                 class="btn close-popup"
-                v-on:click="showmoredetailVideo(''),
-                onMouseOver = ''
-                onPopup = false
+                v-on:click="
+                  showmoredetailVideo(''), (onMouseOver = '');
+                  onPopup = false;
                 "
                 v-if="moreInfo === movieList.title"
               >
@@ -65,7 +67,18 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu" v-on:click="addToMyList(movieList)">
+                      <button
+                        v-if="!checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="addToMyList(movieList)"
+                      >
+                        <i class="fas fa-plus-circle info-menu-group-icon"></i>
+                      </button>
+                      <button
+                        v-if="checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="removeToMyList(movieList)"
+                      >
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -80,7 +93,7 @@
                       v-on:click="
                         showmoredetailVideo(movieList.title),
                           (moreInfo = movieList.title),
-                          onPopup = true
+                          (onPopup = true)
                       "
                     >
                       <button class="btn icon-menu">
@@ -235,8 +248,6 @@ export default {
     mainBrowse,
   },
 
-
-
   data() {
     return {
       movieStock: {
@@ -266,6 +277,9 @@ export default {
         "SciFi",
         "ComingSoon",
       ],
+
+      outofList: [],
+
       movieInlist: [],
       moreLikevideoInlist: [],
       moreInfo: "",
@@ -281,20 +295,20 @@ export default {
   methods: {
     smoothHover(title) {
       var data = this.onMouseOver;
-        if(this.onPopup === false){
-      setTimeout(() => {
+      if (this.onPopup === false) {
+        setTimeout(() => {
           (this.smoothHoverStatus = true), (this.onMouseOver = title);
-          document.querySelector('.top-main-motion').pause()
-      },800);
-        }
+          document.querySelector(".top-main-motion").pause();
+        }, 800);
+      }
 
       if (title !== data) {
         this.smoothHoverStatus = false;
-        document.querySelector('.top-main-motion').play()
+        document.querySelector(".top-main-motion").play();
       }
     },
     smoothHoveroff() {
-      document.querySelector('.top-main-motion').play()
+      document.querySelector(".top-main-motion").play();
       this.smoothHoverStatus = false;
       this.onMouseOver = "";
     },
@@ -350,7 +364,7 @@ export default {
     },
 
     showmoredetailVideo(more) {
-        this.smoothHoverStatus = false;
+      this.smoothHoverStatus = false;
       this.moreInfo = more;
     },
 
@@ -381,9 +395,59 @@ export default {
       return gen;
     },
 
-    addToMyList(movie){
+    addToMyList(movie) {
+      this.clickMylistEvent = false
       this.$store.dispatch("selectMylist", movie);
-    }
+    },
+    removeToMyList(movie) {
+      this.clickMylistEvent = true
+      this.$store.dispatch("removeMylist", movie);
+    },
+    search(movie, genres) {
+      if (this.$store.getters.getOrder === "") {
+        if (this.outofList.length > 0) {
+          this.outofList = [];
+        }
+        return true;
+      } else if (this.$store.getters.getOrder !== "") {
+        for (
+          let index = 0;
+          index < this.$store.getters.getOrder.length;
+          index++
+        ) {
+          if (
+            this.$store.getters.getOrder[index].toLowerCase() ===
+            movie[index].toLowerCase()
+          ) {
+            if (this.outofList.indexOf(genres[index]) === -1) {
+              this.outofList.push(genres[index]);
+            }
+            return true;
+          }
+        }
+      }
+    },
+    outList(movie) {
+      if (this.$store.getters.getOrder === "") {
+        return true;
+      } else {
+        if (this.outofList.indexOf(movie) > -1) {
+          return true;
+        }
+      }
+    },
+    checkMovieInMyList(title) {
+      if (this.$store.getters.getMylist.length === 0) {
+        return false;
+      } 
+      else {
+        for (let index = 0; index < this.$store.getters.getMylist.length; index++) {
+            if (title === this.$store.getters.getMylist[index].title) {
+              return true;
+            }
+        }
+      }
+    },
   },
 
   created() {
@@ -520,6 +584,7 @@ export default {
 
 <style scoped>
 .main-home {
+  width: 100%;
   z-index: 1;
   background-image: linear-gradient(
     to top,
@@ -535,6 +600,7 @@ export default {
 
 .movie-content {
   margin-bottom: 3vw;
+  text-align: left;
 }
 
 .list-name {
@@ -592,7 +658,6 @@ export default {
 
 .video-content-box {
   margin: 0.1vw;
-  width: 15.5vw;
   height: 8.5vw;
   background-color: #222;
   border-radius: 5px;

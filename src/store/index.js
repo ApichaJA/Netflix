@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
       genres: '',
-      myList: []
+      myList: [],
+      searchOrder: '',
   },
 
   getters:{
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     getMylist(state){
       return state.myList
+    },
+    getOrder(state){
+      return state.searchOrder
     },
   },
 
@@ -25,6 +29,16 @@ export default new Vuex.Store({
     addToMylist(state, movie){
       state.myList.push(movie)
     },
+    removeToMylist(state, movie){
+        for (let index = 0; index < state.myList.length; index++) {
+            if (movie.title === this.getters.getMylist[index].title) {
+              this.state.myList[index] = '';
+            }
+      }
+    },
+    findOrder(state, order){
+      state.searchOrder = order
+    },
   },
   actions: {
     selectGenres(genresSelect, genres){
@@ -32,6 +46,12 @@ export default new Vuex.Store({
     },
     selectMylist(movieSelect, movie){
       movieSelect.commit('addToMylist', this.state.movie = movie)
+    },
+    removeMylist(movieSelect, movie){
+      movieSelect.commit('removeToMylist', this.state.movie = movie)
+    },
+    searching(searchInput, text){
+      searchInput.commit('findOrder', this.state.searchOrder = text)
     },
   },
   modules: {

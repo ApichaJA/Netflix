@@ -4,13 +4,6 @@
       <div class="movie-content">
         <div class="list-name">
           <span class="content-list">My List</span>
-
-          <div class="explore-all">
-            <span class="more-link">Explore All</span>
-            <span class="more-link-run"
-              ><i class="fas fa-chevron-right"></i
-            ></span>
-          </div>
         </div>
         <div class="my-list-col">
           <div
@@ -21,7 +14,7 @@
             @mouseleave="smoothHoveroff()"
           >
             <div
-              
+              v-if="search(movieList.title, movieList.genres)"
               :class="{
                 'show-more-detail': moreInfo === movieList.title,
                 'movie-group': moreInfo === '',
@@ -59,7 +52,18 @@
                           class="fas iconscale fa-play-circle info-menu-group-icon"
                         ></i>
                       </button>
-                      <button class="btn icon-menu">
+                       <button
+                        v-if="!checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="addToMyList(movieList)"
+                      >
+                        <i class="fas fa-plus-circle info-menu-group-icon"></i>
+                      </button>
+                      <button
+                        v-if="checkMovieInMyList(movieList.title)"
+                        class="btn icon-menu"
+                        v-on:click="removeToMyList(movieList)"
+                      >
                         <i class="far fa-check-circle info-menu-group-icon"></i>
                       </button>
                       <button class="btn icon-menu">
@@ -226,7 +230,6 @@ import top_movie from "@/assets/movieJson/json/movies-in-theaters.json";
 export default {
   data() {
     return {
-      showGenres: this.$store.getters.getGenres,
       movieMylist: [],
 
       moreLikevideoInlist: [],
@@ -326,30 +329,55 @@ export default {
       });
       return gen;
     },
-
-    filter(filterGen) {
-      if (this.$store.getters.getGenres === "") {
-        return true;
-      } 
-      else if (filterGen.indexOf(this.$store.getters.getGenres) > -1) {
+        addToMyList(movie) {
+      this.clickMylistEvent = false
+      this.$store.dispatch("selectMylist", movie);
+    },
+    removeToMyList(movie) {
+      this.clickMylistEvent = true
+      this.$store.dispatch("removeMylist", movie);
+    },
+    search(movie){
+      if(this.$store.getters.getOrder === ''){
         return true
+      }
+      else if (this.$store.getters.getOrder !== ''){
+        for (let index = 0; index < this.$store.getters.getOrder.length; index++) {
+          if(this.$store.getters.getOrder[index].toLowerCase() === movie[index].toLowerCase()){
+            return true
+        }
+        }
+
+      }
+    },
+        checkMovieInMyList(title) {
+      if (this.$store.getters.getMylist.length === 0) {
+        return false;
+      } 
+      else {
+        for (let index = 0; index < this.$store.getters.getMylist.length; index++) {
+            if (title === this.$store.getters.getMylist[index].title) {
+              return true;
+            }
+        }
       }
     },
   },
 
   created() {
-    this.$store.getters.getMylist.forEach((element) => {
-      this.movieMylist.push(element);
+      this.$store.getters.getMylist.forEach((element) => {
+        if(element !== ''){
+          this.movieMylist.push(element);
+        }
     });
   },
-  mounted() {},
 };
 </script>
 
 <style scoped>
 .main-home {
   transition: opacity 3s;
-  z-index: 3;
+  z-index: 1;
   background-image: linear-gradient(
     to top,
     rgba(20, 20, 20, 1) 93%,
@@ -358,6 +386,7 @@ export default {
   margin-top: 7em;
   padding: 0 4vw;
   top: 43.7vw;
+  width: 100%;
   left: 0;
   text-align: left;
   margin-bottom: 10vw;
@@ -365,6 +394,7 @@ export default {
 
 .movie-content {
   margin-bottom: 3vw;
+  text-align: left;
 }
 
 .list-name {

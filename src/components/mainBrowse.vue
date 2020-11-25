@@ -1,11 +1,11 @@
 <template>
   <div class="main-browse">
     <div class="videoWrapper">
-      <div class="feach-video" v-on:change="volumeSelect('unmuted')" @mouseover="mouseOverVideo()">
+      <div class="feach-video" v-on:change="volumeSelect('unmuted')">
         <img
           class="poster"
           :class="{ outposter: showPoster === false }"
-          src="@/assets/videos/whileyouweresleeping/wywlepposter.jpg"
+          :src="topvideoLogo"
         />
         <video
           ref="videoRef"
@@ -65,6 +65,9 @@
 </template>
 
 <script>
+
+import mainPoster from '@/assets/videos/mainVideo.json'
+
 export default {
   data() {
     return {
@@ -74,11 +77,24 @@ export default {
       muteStatus: true,
       tabFocus: true,
 
-      
+      posterStock: [],
+
+      markRoute: '',
+      randomMovie: 0,
     };
   },
   created() {
+    if(this.$route.name !== this.markRoute){
+      this.markRoute = this.$route.name
+      this.randomMovie = Math.floor(Math.random() * 2); 
+      console.log(this.randomMovie)
+    }
     this.detectFocusOut();
+    mainPoster.forEach(element => {
+      if(element.title !== ''){
+       this.posterStock.push(element)
+      }
+    });
   },
 
   methods: {
@@ -125,31 +141,27 @@ export default {
       window.addEventListener("blur", onWindowFocusChange);
       window.addEventListener("pageshow", onWindowFocusChange);
       window.addEventListener("pagehide", onWindowFocusChange);
-    },
-    mouseOverVideo(){
-      this.$refs.videoRef.play();
     }
   },
   computed: {
     topvideoImg() {
-      var topimg = "logowywslp";
-      return require("@/assets/videos/whileyouweresleeping/" + topimg + ".png");
+      return require(`@/assets/videos/${this.posterStock[this.randomMovie].title}/${this.posterStock[this.randomMovie].movieLogo}`)
     },
     topvideoTitle() {
-      var tileEp =
-        "A young woman has visions through her dreams of terrible things that will happen to people in the future.";
-      return tileEp;
+      return this.posterStock[this.randomMovie].storyline
     },
     topvideo() {
-      var movieName = "wywslp";
-      return require("@/assets/videos/whileyouweresleeping/" + movieName + ".mp4");
+      return require(`@/assets/videos/${this.posterStock[this.randomMovie].title}/${this.posterStock[this.randomMovie].posterUrl}`)
     },
+    topvideoLogo(){
+      return require(`@/assets/videos/${this.posterStock[this.randomMovie].title}/${this.posterStock[this.randomMovie].poster}`)
+    }
   },
+
   mounted() {
     setTimeout(() => {
       this.firstLoadPoster = true;
       this.showPoster = false;
-      this.$refs.videoRef.play();
     }, 2000);
   },
 };
