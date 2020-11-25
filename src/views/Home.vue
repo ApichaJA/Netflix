@@ -229,6 +229,7 @@
                   </div>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -591,7 +592,6 @@ export default {
     rgba(20, 20, 20, 1) 93%,
     rgba(0, 0, 0, 0)
   );
-  position: absolute;
   padding: 0 3.1vw;
   top: 43.7vw;
   left: 0;

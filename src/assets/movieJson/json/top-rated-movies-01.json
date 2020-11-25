@@ -1,5 +1,5 @@
 [{
-    "Title": "The Crown",
+    "title": "The Crown",
     "year": "2020",
     "genres": ["Drama"],
     "poster":"Crown.jpg",
@@ -42,7 +42,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=OiXEpminPms"
 },
 {
-    "Title": "Startup",
+    "title": "Startup",
     "year": "2020",
     "genres": ["Drama", "Romance"],
     "poster":"startup.jpg",
@@ -58,7 +58,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=BemKyzbLDDc"
 },
 {
-    "Title": "It's Okay to Not Be Okay",
+    "title": "It's Okay to Not Be Okay",
     "year": "2020",
     "genres": ["Romance",
 "Drama"
@@ -76,7 +76,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=50ek4HQo0Bc"
 },
 {
-    "Title": "The Last Kingdom",
+    "title": "The Last Kingdom",
     "year": "2020",
     "genres": ["Action",
 "Adventure"
@@ -93,7 +93,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=vNaITmq0cX0"
 },
 {
-    "Title": "Crash Landing on You",
+    "title": "Crash Landing on You",
     "year": "2019",
     "genres": ["Romance",
 "Drama",
@@ -110,7 +110,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=eXMjTXL2Vks"
 },
 {
-    "Title": "Love Alarm",
+    "title": "Love Alarm",
     "year": "2019",
     "genres": ["Romance",
 "Drama"
@@ -127,7 +127,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=8sXTfzaLmiQ"
 },
 {
-    "Title": "The King: Eternal Monarch",
+    "title": "The King: Eternal Monarch",
     "year": "2020",
     "genres": ["Romance"],
     "poster":"The King Eternal Monarch.jpg",
@@ -142,7 +142,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=DWRtVkheXVc"
 },
 {
-    "Title": "The Good Detective",
+    "title": "The Good Detective",
     "year": "2020",
     "genres": ["Drama",
 "Crime"],
@@ -158,7 +158,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=XLgcoOxcYag"
 },
 {
-    "Title": "What's Wrong with Secretary Kim",
+    "title": "What's Wrong with Secretary Kim",
     "year": "2018",
     "genres": ["Romance",
 "Comedy"],
@@ -174,7 +174,7 @@
  "posterUrl": "https://www.youtube.com/watch?v=Ud_R_YNNBNw"
 },
 {
-    "Title": "Kingdom",
+    "title": "Kingdom",
     "year": "2019",
     "genres": ["Drama",
 "History"],
